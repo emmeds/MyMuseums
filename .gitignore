@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/src/main/java/ConnPool.java
+/.idea/copilot.data.migration.agent.xml
+/.idea/copilot.data.migration.ask.xml
+/.idea/copilot.data.migration.ask2agent.xml
+/.idea/copilot.data.migration.edit.xml
+/.idea/dataSources.xml
