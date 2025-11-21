@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,15 +13,34 @@
             </div>
             <nav class="nav">
                 <ul>
-                    <li><a href="#home">Home</a></li>
+                    <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                     <li><a href="#musei">Musei</a></li>
                     <li><a href="#eventi">Eventi</a></li>
                     <li><a href="#contatti">Contatti</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
-                <a href="${pageContext.request.contextPath}/login" style="text-decoration: none;"><button class="btn-secondary">Accedi</button></a>
-                <a href="${pageContext.request.contextPath}/registrazione" style="text-decoration: none;"><button class="btn-primary">Registrati</button></a>
+                <c:choose>
+                    <c:when test="${sessionScope.utente != null}">
+                        <!-- Utente loggato -->
+                        <span class="user-welcome">Ciao ${sessionScope.nomeUtente}!</span>
+                        <a href="${pageContext.request.contextPath}/account" style="text-decoration: none;">
+                            <button class="btn-secondary" >Il mio Account</button>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/logout" style="text-decoration: none;">
+                            <button class="btn-primary">Logout</button>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- Utente non loggato -->
+                        <a href="${pageContext.request.contextPath}/login" style="text-decoration: none;">
+                            <button class="btn-secondary">Accedi</button>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/registrazione" style="text-decoration: none;">
+                            <button class="btn-primary">Registrati</button>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </header>
