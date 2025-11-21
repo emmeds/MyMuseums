@@ -1,34 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyMuseums - Biglietti per Musei</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <h1>🏛️ MyMuseums</h1>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#musei">Musei</a></li>
-                    <li><a href="#eventi">Eventi</a></li>
-                    <li><a href="#contatti">Contatti</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <button class="btn-secondary">Accedi</button>
-                <button class="btn-primary">Registrati</button>
-            </div>
-        </div>
-    </header>
-
+<%@ include file="includes/header.jspf" %>
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-overlay"></div>
@@ -160,46 +133,4 @@
             <button class="btn-cta">Registrati Gratuitamente</button>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer" id="contatti">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>🏛️ MyMuseums</h3>
-                    <p>La tua porta d'accesso alla cultura italiana.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Link Utili</h4>
-                    <ul>
-                        <li><a href="#">Chi Siamo</a></li>
-                        <li><a href="#">Come Funziona</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Supporto</h4>
-                    <ul>
-                        <li><a href="#">Centro Assistenza</a></li>
-                        <li><a href="#">Termini e Condizioni</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Contattaci</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Newsletter</h4>
-                    <p>Iscriviti per ricevere offerte esclusive</p>
-                    <div class="newsletter-form">
-                        <input type="email" placeholder="La tua email">
-                        <button>Iscriviti</button>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 MyMuseums. Tutti i diritti riservati.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+<%@ include file="includes/footer.jspf" %>
