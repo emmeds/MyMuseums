@@ -84,6 +84,17 @@ public class RegistrazioneServlet extends HttpServlet {
             return;
         }
 
+        // Nuovo controllo: validazione forza password (8 char, almeno una maiuscola, un numero, un carattere speciale)
+        if (!isValidPassword(password)) {
+            LOGGER.warning("Validazione fallita: password non rispetta la policy per email=" + email);
+            request.setAttribute("errorMessage", "La password deve contenere almeno 8 caratteri, almeno una lettera maiuscola, un numero e un carattere speciale.");
+            request.setAttribute("nome", nome);
+            request.setAttribute("cognome", cognome);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
+            return;
+        }
+
         try {
             LOGGER.fine("Chiamo UtenteDAO.emailExists per verificare duplicati");
             UtenteDAO utenteDAO = new UtenteDAO();
@@ -116,6 +127,15 @@ public class RegistrazioneServlet extends HttpServlet {
             request.setAttribute("email", email);
             request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
         }
+    }
+
+    // Helper che controlla la policy della password
+    private boolean isValidPassword(String password) {
+        if (password == null) return false;
+        // almeno 8 caratteri, almeno una maiuscola, almeno un numero, almeno un carattere speciale
+        // Uso una classe negata [^A-Za-z0-9] per rappresentare qualsiasi carattere non alfanumerico (carattere speciale)
+        String pattern = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
+        return password.matches(pattern);
     }
 
 }

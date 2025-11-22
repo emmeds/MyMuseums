@@ -9,8 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UtenteDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(UtenteDAO.class.getName());
 
     public Utente doLogin(String email, String password) {
         Connection connection = null;
@@ -54,7 +58,7 @@ public class UtenteDAO {
             return null;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante il login", e);
             throw new RuntimeException("Errore durante il login: " + e.getMessage(), e);
         } finally {
             try {
@@ -62,7 +66,7 @@ public class UtenteDAO {
                 if (ps != null) ps.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Errore durante la chiusura delle risorse JDBC", e);
             }
         }
     }
@@ -115,14 +119,14 @@ public class UtenteDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante la creazione dell'utente", e);
             throw new RuntimeException("Errore durante la creazione dell'utente: " + e.getMessage(), e);
         } finally {
             try {
                 if (ps != null) ps.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Errore durante la chiusura delle risorse JDBC", e);
             }
         }
     }
@@ -140,7 +144,7 @@ public class UtenteDAO {
             rs = ps.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante la verifica email", e);
             throw new RuntimeException("Errore durante la verifica email: " + e.getMessage(), e);
         } finally {
             try {
@@ -148,7 +152,7 @@ public class UtenteDAO {
                 if (ps != null) ps.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Errore durante la chiusura delle risorse JDBC", e);
             }
         }
     }

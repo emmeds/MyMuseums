@@ -21,7 +21,9 @@
     padding: 24px;
     box-shadow: 0 6px 18px rgba(20,20,20,0.06);
 }
-
+ul#pw-policy {
+    margin: 1rem;
+}
 .auth-header h2 {
     margin: 0 0 6px 0;
 }

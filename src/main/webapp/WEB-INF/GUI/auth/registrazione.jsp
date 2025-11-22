@@ -51,7 +51,13 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required placeholder="Minimo 8 caratteri">
-                        <small class="form-hint">La password deve contenere almeno 8 caratteri</small>
+                        <!-- Password policy: visuale per l'utente -->
+                        <ul class="pw-policy" id="pw-policy">
+                            <li data-req="length" class="not-met">Almeno 8 caratteri</li>
+                            <li data-req="uppercase" class="not-met">Almeno una lettera maiuscola (A-Z)</li>
+                            <li data-req="number" class="not-met">Almeno un numero (0-9)</li>
+                            <li data-req="special" class="not-met">Almeno un carattere speciale (!@#$...)</li>
+                        </ul>
                     </div>
 
                     <div class="form-group">
