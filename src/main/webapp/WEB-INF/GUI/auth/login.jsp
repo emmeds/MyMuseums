@@ -1,33 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%@ include file="../includes/header.jspf" %>
     <title>Accedi - MyMuseums</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/registrazione_login.css">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <h1>🏛️ MyMuseums</h1>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li><a href="#musei">Musei</a></li>
-                    <li><a href="#eventi">Eventi</a></li>
-                    <li><a href="#contatti">Contatti</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <a href="${pageContext.request.contextPath}/login" style="text-decoration: none;"><button class="btn-secondary">Accedi</button></a>
-                <a href="${pageContext.request.contextPath}/registrazione" style="text-decoration: none;"><button class="btn-primary">Registrati</button></a>
-            </div>
-        </div>
-    </header>
 
     <!-- Auth Section -->
     <section class="auth-section">
@@ -39,9 +16,14 @@
                 </div>
 
                 <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
                 <% if (errorMessage != null) { %>
                     <div class="error-message">
                         <%= errorMessage %>
+                    </div>
+                <% } else if (successMessage != null) { %>
+                    <div class="success-message">
+                        <%= successMessage %>
                     </div>
                 <% } %>
 
@@ -110,5 +92,6 @@
         </div>
     </section>
 
-<%@ include file="../includes/footer.jspf" %>
+    <script src="${pageContext.request.contextPath}/JS/auth.js"></script>
 
+<%@ include file="../includes/footer.jspf" %>

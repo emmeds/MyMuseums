@@ -1,33 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%@ include file="../includes/header.jspf" %>
     <title>Registrati - MyMuseums</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/registrazione_login.css">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <h1>🏛️ MyMuseums</h1>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li><a href="#musei">Musei</a></li>
-                    <li><a href="#eventi">Eventi</a></li>
-                    <li><a href="#contatti">Contatti</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <a href="${pageContext.request.contextPath}/login" style="text-decoration: none;"><button class="btn-secondary">Accedi</button></a>
-                <a href="${pageContext.request.contextPath}/registrazione" style="text-decoration: none;"><button class="btn-primary">Registrati</button></a>
-            </div>
-        </div>
-    </header>
 
     <!-- Auth Section -->
     <section class="auth-section">
@@ -38,22 +15,37 @@
                     <p>Crea un account per iniziare a prenotare</p>
                 </div>
 
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
+                <% if (errorMessage != null) { %>
+                    <div class="error-message">
+                        <%= errorMessage %>
+                    </div>
+                <% } else if (successMessage != null) { %>
+                    <div class="success-message">
+                        <%= successMessage %>
+                    </div>
+                <% } %>
+
                 <form action="${pageContext.request.contextPath}/registrazione" method="post" class="auth-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" required placeholder="Inserisci il tuo nome">
+                            <input type="text" id="nome" name="nome" required placeholder="Inserisci il tuo nome"
+                                   value="<%= request.getAttribute("nome") != null ? request.getAttribute("nome") : "" %>">
                         </div>
 
                         <div class="form-group">
                             <label for="cognome">Cognome</label>
-                            <input type="text" id="cognome" name="cognome" required placeholder="Inserisci il tuo cognome">
+                            <input type="text" id="cognome" name="cognome" required placeholder="Inserisci il tuo cognome"
+                                   value="<%= request.getAttribute("cognome") != null ? request.getAttribute("cognome") : "" %>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="esempio@email.com">
+                        <input type="email" id="email" name="email" required placeholder="esempio@email.com"
+                               value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>">
                     </div>
 
                     <div class="form-group">
@@ -115,5 +107,7 @@
             </div>
         </div>
     </section>
+
+    <script src="${pageContext.request.contextPath}/JS/auth.js"></script>
 
 <%@ include file="../includes/footer.jspf" %>

@@ -11,9 +11,13 @@ import model.bean.UtenteRegistrato;
 import model.dao.UtenteDAO;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
+    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,6 +34,8 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String ricordami = request.getParameter("ricordami");
+
+        LOGGER.fine(() -> "Login attempt for email=" + email);
 
         // Validazione input lato server
         if (email == null || email.trim().isEmpty()) {
@@ -83,11 +89,14 @@ public class LoginServlet extends HttpServlet {
                     session.setMaxInactiveInterval(30 * 60); // 30 minuti
                 }
 
+                LOGGER.info("Login riuscito per email=" + email + " idUtente=" + utente.getIdUtente());
+
                 // Redirect alla home page
                 response.sendRedirect(request.getContextPath() + "/");
 
             } else {
                 // Login fallito - Email o password errati
+                LOGGER.info("Login fallito per email=" + email);
                 request.setAttribute("errorMessage", "Email o password non corretti");
                 request.setAttribute("email", email);
                 request.getRequestDispatcher("/WEB-INF/GUI/auth/login.jsp").forward(request, response);
@@ -95,11 +104,10 @@ public class LoginServlet extends HttpServlet {
 
         } catch (RuntimeException e) {
             // Errore durante il login
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante login per email=" + email, e);
             request.setAttribute("errorMessage", "Errore del server. Riprova più tardi.");
             request.setAttribute("email", email);
             request.getRequestDispatcher("/WEB-INF/GUI/auth/login.jsp").forward(request, response);
         }
     }
 }
-

@@ -66,4 +66,91 @@ public class UtenteDAO {
             }
         }
     }
+    public Utente addUtente(String nome, String cognome, String email, String password) {
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try {
+            connection = ConnPool.getConnection();
+
+            // Hash della password
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+            // Inserimento nel DB
+            String query = "INSERT INTO Utente (Nome, Cognome, Email, Password, Ruolo) VALUES (?, ?, ?, ?, 'REGISTRATO')";
+            ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, nome);
+            ps.setString(2, cognome);
+            ps.setString(3, email);
+            ps.setString(4, hashedPassword);
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creazione utente fallita, nessuna riga inserita.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int newId = generatedKeys.getInt(1);
+
+                    // Creo l'utente tramite Factory
+                    Utente utente = model.factory.UtenteFactory.getUtente("REGISTRATO");
+                    if (utente instanceof UtenteRegistrato) {
+                        UtenteRegistrato newUser = (UtenteRegistrato) utente;
+                        newUser.setIdUtente(newId);
+                        newUser.setEmail(email);
+                        newUser.setPassword(hashedPassword);
+                        newUser.setNome(nome);
+                        newUser.setCognome(cognome);
+                        return newUser;
+                    } else {
+                        throw new RuntimeException("Errore: Factory non ha restituito un UtenteRegistrato.");
+                    }
+
+                } else {
+                    throw new SQLException("Creazione utente fallita, nessun ID ottenuto.");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore durante la creazione dell'utente: " + e.getMessage(), e);
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Nuovo metodo: controlla se un'email è già presente nel DB
+    public boolean emailExists(String email) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = ConnPool.getConnection();
+            String query = "SELECT 1 FROM Utente WHERE Email = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore durante la verifica email: " + e.getMessage(), e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
