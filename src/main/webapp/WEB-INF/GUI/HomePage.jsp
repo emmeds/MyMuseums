@@ -50,47 +50,55 @@
             <h2 class="section-title">Musei Più Popolari</h2>
             <div class="museums-grid">
                 <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="museum-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <img src="${pageContext.request.contextPath}/images/mann.png" alt="Museo Archeologico Nazionale di Napoli">
+                    </div>
                     <div class="museum-content">
-                        <h3>Galleria degli Uffizi</h3>
-                        <p class="museum-location">📍 Firenze</p>
-                        <p class="museum-description">Una delle più importanti gallerie d'arte del mondo.</p>
+                        <h3>Museo Archeologico Nazionale Di Napoli</h3>
+                        <p class="museum-location">📍 Napoli</p>
+                        <p class="museum-description">Uno dei più importanti musei archeologici al mondo.</p>
                         <div class="museum-footer">
-                            <span class="price">Da €20.00</span>
+                            <span class="price">Da €12.00</span>
                             <button class="btn-primary">Prenota Ora</button>
                         </div>
                     </div>
                 </div>
                 <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <div class="museum-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <img src="${pageContext.request.contextPath}/images/mav.png" alt="Museo Archeologico Virtuale">
+                    </div>
                     <div class="museum-content">
-                        <h3>Musei Vaticani</h3>
-                        <p class="museum-location">📍 Roma</p>
-                        <p class="museum-description">Scopri i capolavori della Cappella Sistina.</p>
+                        <h3>Museo Archeologico Virtuale</h3>
+                        <p class="museum-location">📍 Ercolano</p>
+                        <p class="museum-description">Museo multimediale dedicato a Pompei ed Ercolano.</p>
                         <div class="museum-footer">
-                            <span class="price">Da €17.00</span>
+                            <span class="price">Da €9.00</span>
                             <button class="btn-primary">Prenota Ora</button>
                         </div>
                     </div>
                 </div>
                 <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div class="museum-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <img src="${pageContext.request.contextPath}/images/irpino.png" alt="Museo Provinciale Irpino">
+                    </div>
                     <div class="museum-content">
-                        <h3>Museo Egizio</h3>
-                        <p class="museum-location">📍 Torino</p>
-                        <p class="museum-description">La più importante collezione egizia al mondo.</p>
+                        <h3>Museo Provinciale Irpino</h3>
+                        <p class="museum-location">📍 Avellino</p>
+                        <p class="museum-description">Collezioni storiche e archeologiche dell’Irpinia.</p>
                         <div class="museum-footer">
-                            <span class="price">Da €15.00</span>
+                            <span class="price">Da €5.00</span>
                             <button class="btn-primary">Prenota Ora</button>
                         </div>
                     </div>
                 </div>
                 <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                    <div class="museum-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <img src="${pageContext.request.contextPath}/images/sangennaro.png" alt="Museo del Tesoro di San Gennaro">
+                    </div>
                     <div class="museum-content">
-                        <h3>Museo del Novecento</h3>
-                        <p class="museum-location">📍 Milano</p>
-                        <p class="museum-description">Arte contemporanea italiana del XX secolo.</p>
+                        <h3>Museo del Tesoro di San Gennaro</h3>
+                        <p class="museum-location">📍 Napoli</p>
+                        <p class="museum-description">Tesoro storico, culturale e religioso unico.</p>
                         <div class="museum-footer">
                             <span class="price">Da €10.00</span>
                             <button class="btn-primary">Prenota Ora</button>
