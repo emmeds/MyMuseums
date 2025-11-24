@@ -82,6 +82,7 @@ public class LoginServlet extends HttpServlet {
                 } else {
                     session.setAttribute("ruolo", "ADMIN");
                     request.getRequestDispatcher("/WEB-INF/GUI/admin/admin.jsp").forward(request, response);
+                    return;
                 }
 
                 // Se "Ricordami" è selezionato, imposta un timeout più lungo (30 giorni)
