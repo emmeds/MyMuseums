@@ -1,0 +1,39 @@
+/* Footer-specific styles extracted from Homepage.css */
+:root {
+    --accent: #ff7a18;
+    --text: #1f1f2b;
+}
+
+.footer {
+    background: #111827;
+    color: white;
+    padding: 3rem 0 1.5rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.footer-column a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-column a:hover {
+    color: var(--accent);
+}
+
+.footer-bottom {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+}
+
+@media (max-width: 640px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+

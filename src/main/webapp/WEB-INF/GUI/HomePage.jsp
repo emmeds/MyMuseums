@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-overlay"></div>
