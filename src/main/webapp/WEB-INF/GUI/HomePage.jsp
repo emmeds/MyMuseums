@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
@@ -45,69 +47,34 @@
     </section>
 
     <!-- Popular Museums Section -->
-    <section class="museums" id="musei">
-        <div class="container">
-            <h2 class="section-title">Musei Più Popolari</h2>
-            <div class="museums-grid">
+<section class="museums" id="musei">
+    <div class="container">
+        <h2 class="section-title">Musei Più Popolari</h2>
+        <div class="museums-grid">
+
+            <c:forEach items="${musei}" var="museo">
                 <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <img src="${pageContext.request.contextPath}/images/mann.png" alt="Museo Archeologico Nazionale di Napoli">
+                    <div class="museum-image">
+                        <img src="${pageContext.request.contextPath}${museo.immagine}"
+
+
+                             alt="${museo.nome}"
+                             style="width: 100%; height: 100%; object-fit: cover; display: block;">
                     </div>
                     <div class="museum-content">
-                        <h3>Museo Archeologico Nazionale Di Napoli</h3>
-                        <p class="museum-location">📍 Napoli</p>
-                        <p class="museum-description">Uno dei più importanti musei archeologici al mondo.</p>
+                        <h3><c:out value="${museo.nome}"/></h3>
+                        <p class="museum-location">📍 <c:out value="${museo.citta}"/></p>
+                        <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
                         <div class="museum-footer">
-                            <span class="price">Da €12.00</span>
+                            <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
                             <button class="btn-primary">Prenota Ora</button>
                         </div>
                     </div>
                 </div>
-                <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <img src="${pageContext.request.contextPath}/images/mav.png" alt="Museo Archeologico Virtuale">
-                    </div>
-                    <div class="museum-content">
-                        <h3>Museo Archeologico Virtuale</h3>
-                        <p class="museum-location">📍 Ercolano</p>
-                        <p class="museum-description">Museo multimediale dedicato a Pompei ed Ercolano.</p>
-                        <div class="museum-footer">
-                            <span class="price">Da €9.00</span>
-                            <button class="btn-primary">Prenota Ora</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                        <img src="${pageContext.request.contextPath}/images/irpino.png" alt="Museo Provinciale Irpino">
-                    </div>
-                    <div class="museum-content">
-                        <h3>Museo Provinciale Irpino</h3>
-                        <p class="museum-location">📍 Avellino</p>
-                        <p class="museum-description">Collezioni storiche e archeologiche dell’Irpinia.</p>
-                        <div class="museum-footer">
-                            <span class="price">Da €5.00</span>
-                            <button class="btn-primary">Prenota Ora</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        <img src="${pageContext.request.contextPath}/images/sangennaro.png" alt="Museo del Tesoro di San Gennaro">
-                    </div>
-                    <div class="museum-content">
-                        <h3>Museo del Tesoro di San Gennaro</h3>
-                        <p class="museum-location">📍 Napoli</p>
-                        <p class="museum-description">Tesoro storico, culturale e religioso unico.</p>
-                        <div class="museum-footer">
-                            <span class="price">Da €10.00</span>
-                            <button class="btn-primary">Prenota Ora</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Stats Section -->
     <section class="stats">
@@ -132,7 +99,6 @@
             </div>
         </div>
     </section>
-
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
