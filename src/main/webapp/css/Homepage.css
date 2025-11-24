@@ -387,6 +387,17 @@ body {
 
 .museum-image {
     height: 220px;
+    width: 100%;          /* Assicura che il contenitore occupi la larghezza */
+    position: relative;   /* Mantiene il contesto */
+    overflow: hidden;     /* Taglia tutto ciò che sborda */
+}
+
+
+.museum-image img {
+    width: 100%;          /* Occupa tutta la larghezza del box */
+    height: 100%;         /* Occupa tutta l'altezza del box (220px) */
+    object-fit: cover;    /* Ritaglia l'immagine per riempire il box senza deformarla */
+    display: block;       /* Rimuove spazi bianchi indesiderati */
 }
 
 .museum-content {

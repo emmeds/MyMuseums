@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
@@ -45,61 +47,34 @@
     </section>
 
     <!-- Popular Museums Section -->
-    <section class="museums" id="musei">
-        <div class="container">
-            <h2 class="section-title">Musei Più Popolari</h2>
-            <div class="museums-grid">
+<section class="museums" id="musei">
+    <div class="container">
+        <h2 class="section-title">Musei Più Popolari</h2>
+        <div class="museums-grid">
+
+            <c:forEach items="${musei}" var="museo">
                 <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="museum-image">
+                        <img src="${pageContext.request.contextPath}${museo.immagine}"
+
+
+                             alt="${museo.nome}"
+                             style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
                     <div class="museum-content">
-                        <h3>Galleria degli Uffizi</h3>
-                        <p class="museum-location">📍 Firenze</p>
-                        <p class="museum-description">Una delle più importanti gallerie d'arte del mondo.</p>
+                        <h3><c:out value="${museo.nome}"/></h3>
+                        <p class="museum-location">📍 <c:out value="${museo.citta}"/></p>
+                        <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
                         <div class="museum-footer">
-                            <span class="price">Da €20.00</span>
+                            <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
                             <button class="btn-primary">Prenota Ora</button>
                         </div>
                     </div>
                 </div>
-                <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                    <div class="museum-content">
-                        <h3>Musei Vaticani</h3>
-                        <p class="museum-location">📍 Roma</p>
-                        <p class="museum-description">Scopri i capolavori della Cappella Sistina.</p>
-                        <div class="museum-footer">
-                            <span class="price">Da €17.00</span>
-                            <button class="btn-primary">Prenota Ora</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                    <div class="museum-content">
-                        <h3>Museo Egizio</h3>
-                        <p class="museum-location">📍 Torino</p>
-                        <p class="museum-description">La più importante collezione egizia al mondo.</p>
-                        <div class="museum-footer">
-                            <span class="price">Da €15.00</span>
-                            <button class="btn-primary">Prenota Ora</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="museum-card">
-                    <div class="museum-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                    <div class="museum-content">
-                        <h3>Museo del Novecento</h3>
-                        <p class="museum-location">📍 Milano</p>
-                        <p class="museum-description">Arte contemporanea italiana del XX secolo.</p>
-                        <div class="museum-footer">
-                            <span class="price">Da €10.00</span>
-                            <button class="btn-primary">Prenota Ora</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Stats Section -->
     <section class="stats">
@@ -124,7 +99,6 @@
             </div>
         </div>
     </section>
-
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
