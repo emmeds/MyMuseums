@@ -6,6 +6,10 @@
     <title>MyMuseums - Biglietti per Musei</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+
+    <c:if test="${not empty pageCss}">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/${pageCss}">
+    </c:if>
 </head>
 <body>
     <header class="header">

@@ -11,7 +11,7 @@
                     <ul>
                         <li><a href="#">Chi Siamo</a></li>
                         <li><a href="#">Come Funziona</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="${pageContext.request.contextPath}/faq">FAQ</a></li>
                         <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
