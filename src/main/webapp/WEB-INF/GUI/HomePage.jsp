@@ -54,24 +54,27 @@
         <div class="museums-grid">
 
             <c:forEach items="${musei}" var="museo">
-                <div class="museum-card">
-                    <div class="museum-image">
-                        <img src="${pageContext.request.contextPath}${museo.immagine}"
+                <a href="${pageContext.request.contextPath}/DettagliMuseoServlet?id=${museo.idMuseo}" class="card-link">
+                    <div class="museum-card">
+                        <div class="museum-image">
+                            <img src="${pageContext.request.contextPath}${museo.immagine}"
 
 
-                             alt="${museo.nome}"
-                             style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                    </div>
-                    <div class="museum-content">
-                        <h3><c:out value="${museo.nome}"/></h3>
-                        <p class="museum-location">📍 <c:out value="${museo.citta}"/></p>
-                        <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
-                        <div class="museum-footer">
-                            <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
-                            <button class="btn-primary">Prenota Ora</button>
+                                 alt="${museo.nome}"
+                                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                        <div class="museum-content">
+                            <h3><c:out value="${museo.nome}"/></h3>
+                            <p class="museum-location">📍 <c:out value="${museo.citta}"/></p>
+                            <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
+                            <div class="museum-footer">
+                                <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
+                                <button class="btn-primary">Prenota Ora</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
+
             </c:forEach>
         </div>
     </div>
