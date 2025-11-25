@@ -1,0 +1,254 @@
+/* --- LAYOUT GENERALE --- */
+.details-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 50% e 50% */
+    gap: 40px;
+    margin-bottom: 40px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* --- COLONNA IMMAGINE (FIX: Adatta e Centra) --- */
+.details-image-col {
+    position: relative;
+    min-height: 400px;         /* Altezza minima ridotta per proporzioni migliori */
+    background-color: #f8f9fa; /* Sfondo grigio chiaro per fare da cornice */
+    display: flex;             /* Flexbox per centrare */
+    align-items: center;       /* Centra verticalmente */
+    justify-content: center;   /* Centra orizzontalmente */
+    padding: 20px;             /* Padding interno */
+}
+
+.details-image-col img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;       /* L'immagine si adatta senza tagliarsi */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Leggera ombra */
+}
+
+/* --- COLONNA INFO --- */
+.details-info-col {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.details-title {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    line-height: 1.2;
+}
+
+.details-location {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- FORM E INPUT GENERALI --- */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #6758ff;
+    outline: none;
+}
+
+/* --- RIQUADRI DI SELEZIONE (Biglietti e Tour) --- */
+.selection-box {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.selection-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* --- NUOVO STILE LISTA BIGLIETTI (Quantità per riga) --- */
+.tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ticket-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.ticket-row:hover {
+    border-color: #b0b8c1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ticket-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.05rem;
+}
+
+.ticket-price {
+    color: #e74c3c; /* Colore accento rosso/arancio */
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-top: 2px;
+}
+
+.ticket-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.qty-input {
+    width: 70px !important; /* Forza larghezza ridotta */
+    text-align: center;
+    padding: 8px 5px;
+}
+
+/* --- STILE PER CHECKBOX TOUR (Simile ai vecchi radio) --- */
+.custom-radio-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.custom-radio-item:hover {
+    background-color: #eef2f5;
+    border-color: #b0b8c1;
+}
+
+.radio-label-text {
+    flex-grow: 1;
+    font-weight: 500;
+    color: #333;
+}
+
+.radio-price-tag {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+/* --- DESCRIZIONE IN BASSO --- */
+.description-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    color: #444;
+    line-height: 1.8;
+}
+
+.description-box h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* --- BOTTONE ACQUISTA --- */
+.btn-buy {
+    width: 100%;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    padding: 18px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-buy:active {
+    transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    .details-image-col {
+        min-height: 300px;
+    }
+    .details-info-col {
+        padding: 25px;
+    }
+}

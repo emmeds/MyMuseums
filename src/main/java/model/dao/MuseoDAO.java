@@ -140,4 +140,51 @@ public class MuseoDAO {
 
         return generatedId;
     }
+
+    public Museo doRetrieveById(int idMuseo) {
+        Museo museo = null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM Museo WHERE ID_Museo = ?";
+
+        try {
+            connection = ConnPool.getConnection();
+            ps = connection.prepareStatement(query);
+
+            // Impostiamo il parametro ID nella query (il ? diventa il valore di idMuseo)
+            ps.setInt(1, idMuseo);
+
+            rs = ps.executeQuery();
+
+            // Usiamo if invece di while perché ci aspettiamo un solo risultato
+            if (rs.next()) {
+                museo = new Museo();
+                museo.setIdMuseo(rs.getInt("ID_Museo"));
+                museo.setNome(rs.getString("Nome"));
+                museo.setDescrizione(rs.getString("Descrizione"));
+                museo.setImmagine(rs.getString("Immagine"));
+                museo.setVia(rs.getString("Via"));
+                museo.setCitta(rs.getString("Citta"));
+                museo.setCap(rs.getString("Cap"));
+                museo.setPrezzoTourGuidato(rs.getBigDecimal("PrezzoTourGuidato"));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Errore nel recupero del museo id: " + idMuseo, e);
+            throw new RuntimeException(e);
+        } finally {
+            // Chiudiamo le risorse manualmente
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Errore chiusura risorse", e);
+            }
+        }
+        return museo; // Ritorna l'oggetto Museo o null se non trovato
+    }
+
 }
