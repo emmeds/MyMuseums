@@ -98,17 +98,7 @@
                 return;
             }
 
-            // basic URL pattern check
-            const url = document.getElementById('imageUrl').value;
-            try {
-                if (url && !(new URL(url))) {
-                    // fallthrough
-                }
-            } catch(err){
-                e.preventDefault();
-                message.textContent = 'Inserisci un URL immagine valido.';
-                return;
-            }
+
 
             // leave server-side to perform full validation and persistence
         });
