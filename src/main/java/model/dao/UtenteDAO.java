@@ -2,6 +2,7 @@ package model.dao;
 
 import model.bean.Utente;
 import model.bean.UtenteRegistrato;
+
 import model.utils.ConnPool;
 import org.mindrot.jbcrypt.BCrypt;
 

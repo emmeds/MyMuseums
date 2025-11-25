@@ -38,7 +38,7 @@ public class MuseoDAO {
                 m.setVia(rs.getString("Via"));
                 m.setCitta(rs.getString("Citta"));
                 m.setCap(rs.getString("Cap"));
-                m.setPrezzoTourGuidato(rs.getDouble("PrezzoTourGuidato"));
+                m.setPrezzoTourGuidato(rs.getBigDecimal("PrezzoTourGuidato"));
 
                 musei.add(m);
             }
@@ -81,7 +81,7 @@ public class MuseoDAO {
                 m.setVia(rs.getString("Via"));
                 m.setCitta(rs.getString("Citta"));
                 m.setCap(rs.getString("Cap"));
-                m.setPrezzoTourGuidato(rs.getDouble("PrezzoTourGuidato"));
+                m.setPrezzoTourGuidato(rs.getBigDecimal("PrezzoTourGuidato"));
 
                 musei.add(m);
             }
@@ -102,5 +102,42 @@ public class MuseoDAO {
         }
         return musei;
 
+    }
+
+    public int doSave(Museo museo) {
+        String insertSQL = "INSERT INTO Museo (Nome, Descrizione, Immagine, Via, Citta, Cap, PrezzoTourGuidato) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        int generatedId = -1;
+
+        try (Connection connection = ConnPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setString(1, museo.getNome());
+            preparedStatement.setString(2, museo.getDescrizione());
+            preparedStatement.setString(3, museo.getImmagine());
+            preparedStatement.setString(4, museo.getVia());
+            preparedStatement.setString(5, museo.getCitta());
+            preparedStatement.setString(6, museo.getCap());
+            preparedStatement.setBigDecimal(7, museo.getPrezzoTourGuidato());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating museo failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating museo failed, no ID obtained.");
+                }
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Errore nel salvataggio del museo", e);
+            throw new RuntimeException(e);
+        }
+
+        return generatedId;
     }
 }

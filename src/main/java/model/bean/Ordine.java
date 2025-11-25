@@ -1,5 +1,6 @@
 package model.bean;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ public class Ordine {
 
     private int idOrdine;
     private LocalDateTime dataAcquisto;
-    private double importoTotale;
+    private BigDecimal importoTotale;
     private int idUtente;
 
     // Relazione 1 a * --> Ordine contiene Biglietti
@@ -16,7 +17,7 @@ public class Ordine {
 
     public Ordine() {}
 
-    public Ordine(int idOrdine, LocalDateTime dataAcquisto, double importoTotale, int idUtente) {
+    public Ordine(int idOrdine, LocalDateTime dataAcquisto, BigDecimal importoTotale, int idUtente) {
         this.idOrdine = idOrdine;
         this.dataAcquisto = dataAcquisto;
         this.importoTotale = importoTotale;
@@ -39,11 +40,11 @@ public class Ordine {
         this.dataAcquisto = dataAcquisto;
     }
 
-    public double getImportoTotale() {
+    public BigDecimal getImportoTotale() {
         return importoTotale;
     }
 
-    public void setImportoTotale(double importoTotale) {
+    public void setImportoTotale(BigDecimal importoTotale) {
         this.importoTotale = importoTotale;
     }
 

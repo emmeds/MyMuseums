@@ -1,15 +1,17 @@
 package model.bean;
 
+import java.math.BigDecimal;
+
 public class TipologiaBiglietto {
 
     private int idTipologia;
     private String nome;
-    private double prezzo;
+    private BigDecimal prezzo;
     private int idMuseo;
 
     public TipologiaBiglietto() {}
 
-    public TipologiaBiglietto(int idTipologia, String nome, double prezzo, int idMuseo) {
+    public TipologiaBiglietto(int idTipologia, String nome, BigDecimal prezzo, int idMuseo) {
         this.idTipologia = idTipologia;
         this.nome = nome;
         this.prezzo = prezzo;
@@ -32,11 +34,11 @@ public class TipologiaBiglietto {
         this.nome = nome;
     }
 
-    public double getPrezzo() {
+    public BigDecimal getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(double prezzo) {
+    public void setPrezzo(BigDecimal prezzo) {
         this.prezzo = prezzo;
     }
 

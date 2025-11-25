@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.bean.Admin;
 import model.bean.Utente;
 import model.bean.UtenteRegistrato;
 import model.dao.UtenteDAO;
@@ -80,6 +81,8 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("ruolo", "REGISTRATO");
                 } else {
                     session.setAttribute("ruolo", "ADMIN");
+                    request.getRequestDispatcher("/WEB-INF/GUI/admin/admin.jsp").forward(request, response);
+                    return;
                 }
 
                 // Se "Ricordami" è selezionato, imposta un timeout più lungo (30 giorni)
