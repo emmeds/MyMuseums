@@ -5,15 +5,33 @@
 <% pageContext.setAttribute("pageCss", "/css/admin_form.css", PageContext.PAGE_SCOPE); %>
 <!DOCTYPE html>
 <html lang="it">
-<%@ include file="../includes/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_form.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - Aggiungi Museo</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_form.css">
+</head>
+<body>
 
 <div class="admin-form-wrapper">
+    <div class="log-out">
+        <a href="${pageContext.request.contextPath}/logout">
+            <button type="button" class="btn-primary">Logout Admin</button>
+        </a>
+    </div>
     <div class="container">
         <h2>Inserisci nuovo Museo</h2>
         <p>Compila i campi per aggiungere un museo al sistema.</p>
 
-        <form id="addMuseoForm" class="admin-form" action="${pageContext.request.contextPath}/admin/AddMuseoServlet" method="post" novalidate>
+        <!-- Messaggi server-side -->
+        <c:if test="${not empty successMessage}">
+            <div class="alert alert-success" role="status" aria-live="polite">${successMessage}</div>
+        </c:if>
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-error" role="alert" aria-live="polite">${errorMessage}</div>
+        </c:if>
+
+        <form id="addMuseoForm" class="admin-form" action="${pageContext.request.contextPath}/AddMuseoServlet" method="post" novalidate>
             <div class="form-row">
                 <label for="imageUrl">URL Immagine</label>
                 <input type="url" id="imageUrl" name="imageUrl" placeholder="https://esempio.com/immagine.jpg" required>
@@ -23,9 +41,18 @@
                 <label for="nome">Nome del museo</label>
                 <input type="text" id="nome" name="nome" placeholder="Museo Nazionale..." required>
             </div>
+
+            <div class="form-row">
+                <label for="via">Via</label>
+                <input type="text" id="via" name="via" placeholder="Via Roma, 1" required>
+            </div>
             <div class="form-row">
                 <label for="citta">Città</label>
                 <input type="text" id="citta" name="citta" placeholder="Napoli" required>
+            </div>
+            <div class="form-row">
+                <label for="cap">CAP</label>
+                <input type="text" id="cap" name="cap" placeholder="80100" required pattern="\d{5}">
             </div>
 
             <div class="form-row">
@@ -33,10 +60,7 @@
                 <textarea id="descrizione" name="descrizione" rows="5" placeholder="Breve descrizione del museo" required></textarea>
             </div>
 
-            <div class="form-row">
-                <label for="indirizzo">Indirizzo</label>
-                <input type="text" id="indirizzo" name="indirizzo" placeholder="Via Roma 1, Napoli" required>
-            </div>
+
 
             <fieldset class="ticket-prices">
                 <legend>Prezzi biglietti</legend>
@@ -44,29 +68,31 @@
                 <div class="ticket-grid">
                     <div class="form-row">
                         <label for="prezzoStandard">Standard (€)</label>
-                        <input type="number" id="prezzoStandard" name="prezzoStandard" step="0.01" min="0" required>
+                        <input type="number" id="prezzoStandard" name="prezzoStandard" step="5" min="0" required>
                     </div>
 
                     <div class="form-row">
                         <label for="prezzoRidotto">Ridotto (€)</label>
-                        <input type="number" id="prezzoRidotto" name="prezzoRidotto" step="0.01" min="0" required>
+                        <input type="number" id="prezzoRidotto" name="prezzoRidotto" step="5" min="0" required>
                     </div>
 
                     <div class="form-row">
                         <label for="prezzoSaltaFila">Salta Fila (€)</label>
-                        <input type="number" id="prezzoSaltaFila" name="prezzoSaltaFila" step="0.01" min="0" required>
+                        <input type="number" id="prezzoSaltaFila" name="prezzoSaltaFila" step="5" min="0" required>
                     </div>
                 </div>
 
-                <div class="form-row" style="margin-top:16px;display:flex;align-items:center; gap:10px; flex-direction: row">
-                    <input type="checkbox" id="tourGuidato" name="tourGuidato" value="true">
-                    <label for="tourGuidato">Tour guidato disponibile</label>
+
+                <div class="form-row">
+                    <label for="prezzoTourGuidato" style="width:50%;margin-top: 10px">Prezzo Tour-Guidato (€)</label>
+                    <input type="number" id="prezzoTourGuidato" name="prezzoTourGuidato" step="5" min="0" required style="width:29%;">
+
                 </div>
             </fieldset>
 
             <div class="form-actions">
                 <button type="submit" class="btn-save">Salva Museo</button>
-                <button type="reset" class="btn-reset">Reset</button>
+
             </div>
 
 
@@ -105,5 +131,5 @@
     })();
 </script>
 
-
-<%@ include file="../includes/footer.jspf" %>
+</body>
+</html>

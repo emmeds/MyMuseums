@@ -1,5 +1,7 @@
 package model.bean;
 
+import java.math.BigDecimal;
+
 public class Museo {
 
     private int idMuseo;
@@ -9,12 +11,12 @@ public class Museo {
     private String via;
     private String citta;
     private String cap;
-    private double prezzoTourGuidato;
+    private BigDecimal prezzoTourGuidato;
 
     public Museo() {}
 
     public Museo(int idMuseo, String nome, String descrizione, String immagine,
-                 String via, String citta, String cap, double prezzoTourGuidato) {
+                 String via, String citta, String cap, BigDecimal prezzoTourGuidato) {
         this.idMuseo = idMuseo;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -81,11 +83,11 @@ public class Museo {
         this.cap = cap;
     }
 
-    public double getPrezzoTourGuidato() {
+    public BigDecimal getPrezzoTourGuidato() {
         return prezzoTourGuidato;
     }
 
-    public void setPrezzoTourGuidato(double prezzoTourGuidato) {
+    public void setPrezzoTourGuidato(BigDecimal prezzoTourGuidato) {
         this.prezzoTourGuidato = prezzoTourGuidato;
     }
 
