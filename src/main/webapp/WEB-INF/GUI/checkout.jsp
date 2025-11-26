@@ -42,33 +42,40 @@
         <form action="${pageContext.request.contextPath}/AcquistoServlet" method="post">
             <input type="hidden" name="action" value="paga" />
 
+
             <div class="form-group">
                 <label>Metodo di Pagamento</label>
-                <select name="metodoPagamento" class="form-control">
+                <select id="metodoPagamento" name="metodoPagamento" class="form-control" onchange="gestisciMetodoPagamento()">
                     <option value="carta">Carta di Credito</option>
                     <option value="paypal">PayPal</option>
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>Intestatario Carta</label>
-                <input type="text" name="intestatario" class="form-control" placeholder="Es. Marco Rossi" required>
-            </div>
-
-            <div class="form-group">
-                <label>Numero Carta</label>
-                <input type="text" name="numeroCarta" class="form-control" placeholder="0000 0000 0000 0000" required pattern="\d{4}-?\d{4}-?\d{4}-?\d{4}" title="Inserisci 16 cifre">
-            </div>
-
-            <div style="display: flex; gap: 1rem;">
-                <div class="form-group" style="flex: 1;">
-                    <label>Scadenza</label>
-                    <input type="text" name="scadenza" class="form-control" placeholder="MM/YY" required>
+            <div id="sezioneCarta">
+                <div class="form-group">
+                    <label>Intestatario Carta</label>
+                    <input type="text" name="intestatario" class="form-control" placeholder="Es. Marco Rossi" required>
                 </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>CVC</label>
-                    <input type="text" name="cvc" class="form-control" placeholder="123" required maxlength="3" pattern="\d{3}">
+
+                <div class="form-group">
+                    <label>Numero Carta</label>
+                    <input type="text" name="numeroCarta" class="form-control" placeholder="1234567891234567" required maxlength="16" title="Inserisci 16 cifre" oninput="this.value = this.value.replace(/\D/g, '')">
                 </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Scadenza</label>
+                        <input type="text" name="scadenza" class="form-control" placeholder="MM/YY" required maxlength="5">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>CVC</label>
+                        <input type="text" name="cvc" class="form-control" placeholder="123" required maxlength="3" oninput="this.value = this.value.replace(/\D/g, '')">
+                    </div>
+                </div>
+        </div>
+
+            <div id="sezionePaypal" style="display: none; margin-bottom: 20px;">
+                <p>Hai selezionato PayPal. Clicca su Conferma per procedere.</p>
             </div>
 
             <button type="submit" class="btn-pay">Conferma e Paga</button>
@@ -77,5 +84,32 @@
 </div>
 
 <%@ include file="includes/footer.jspf" %>
+
+<script>
+    function gestisciMetodoPagamento() {
+        var select = document.getElementById("metodoPagamento");
+        var divCarta = document.getElementById("sezioneCarta");
+        var divPaypal = document.getElementById("sezionePaypal");
+
+        // Seleziona tutti gli input dentro il div della carta
+        var inputCarta = divCarta.querySelectorAll("input");
+
+        if (select.value === "paypal") {
+            // Nascondi carta
+            divCarta.style.display = "none";
+            divPaypal.style.display = "block";
+
+            // Rimuovi 'required' dai campi carta (altrimenti il form non parte)
+            inputCarta.forEach(function(el) { el.removeAttribute("required"); });
+        } else {
+            // Mostra carta
+            divCarta.style.display = "block";
+            divPaypal.style.display = "none";
+
+            // Rimetti 'required'
+            inputCarta.forEach(function(el) { el.setAttribute("required", ""); });
+        }
+    }
+</script>
 </body>
 </html>
