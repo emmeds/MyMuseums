@@ -1,0 +1,108 @@
+/* css/checkout.css */
+
+.checkout-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: var(--surface); /* Bianco */
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.checkout-container h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    text-align: center;
+}
+
+/* Box di riepilogo in alto */
+.summary-box {
+    background: var(--surface-alt); /* Colore sfondo alternativo */
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.summary-box h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.summary-box p {
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+
+.total-price {
+    font-size: 1.8rem;
+    color: var(--primary); /* Rosso */
+    font-weight: 800;
+    text-align: right;
+    margin-top: 1rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #fff;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(179, 0, 0, 0.1); /* Alone rosso al focus */
+}
+
+/* Bottone Paga */
+.btn-pay {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    box-shadow: 0 10px 20px rgba(179, 0, 0, 0.2);
+}
+
+.btn-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(179, 0, 0, 0.3);
+}
+
+/* Messaggio di Errore */
+.alert-error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #fecaca;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}

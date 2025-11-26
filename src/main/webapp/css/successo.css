@@ -1,0 +1,58 @@
+/* css/successo.css */
+
+.success-wrapper {
+    min-height: 60vh; /* Centra verticalmente nello schermo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.success-card {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    border-top: 6px solid var(--primary); /* Linea rossa in alto */
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.success-card h1 {
+    color: var(--primary);
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.success-card p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.btn-home {
+    display: inline-block;
+    background-color: var(--surface-alt);
+    color: var(--primary);
+    padding: 0.8rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid var(--primary);
+    transition: var(--transition);
+}
+
+.btn-home:hover {
+    background-color: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(179, 0, 0, 0.2);
+}
