@@ -2,8 +2,9 @@
    Extracted from Homepage.css so header.jspf can import only header/footer css
 */
 :root {
-    --primary: #6758ff;
-    --primary-dark: #4534c1;
+    /* NUOVI COLORI ROSSI (Bordeaux) */
+    --primary: #b30000;         /* Il rosso scuro principale */
+    --primary-dark: #800000;    /* Rosso ancora più scuro per l'hover */
     --accent: #ff7a18;
     --text: #1f1f2b;
     --muted: #6b7280;
