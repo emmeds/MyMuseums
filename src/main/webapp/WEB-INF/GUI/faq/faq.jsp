@@ -14,7 +14,7 @@
 <%-- 2. Includi l'header (che ora leggerà la variabile pageCss) --%>
 <%@ include file="../includes/header.jspf" %>
 
-<section class="page-hero" style="text-align: center; padding: 3rem 0; background: linear-gradient(135deg, #6758ff 0%, #9f53ff 100%); color: white; margin-bottom: 2rem;">
+<section class="page-hero" >
     <div class="container">
         <h1>Domande Frequenti</h1>
         <p>Trova le risposte ai tuoi dubbi sui biglietti e sulle visite.</p>

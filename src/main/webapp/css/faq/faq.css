@@ -1,5 +1,33 @@
+.page-hero {
+    position: relative;
+    padding: clamp(3rem, 5vw, 4rem) 0; /* Spaziatura responsive */
+    background: linear-gradient(135deg, #1a1a1a 0%, #b30000 60%, #ff1a1a 100%); /* Stesso gradiente della Home */
+    background-blend-mode: overlay;
+    color: white;
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom-left-radius: clamp(20px, 4vw, 32px);
+    border-bottom-right-radius: clamp(20px, 4vw, 32px);
+    box-shadow: var(--shadow-soft);
+}
+
+.page-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.page-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- FAQ Container --- */
 .faq-section {
-    padding-bottom: 4rem;
+    padding-bottom: 5rem;
     min-height: 50vh;
 }
 
@@ -8,32 +36,44 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem; /* Aumentato leggermente il gap */
 }
 
+/* --- FAQ Item Card --- */
 .faq-item {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    background: var(--surface); /* Usa il bianco definito nelle variabili */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Bordo molto sottile */
+    border-radius: var(--radius); /* Usa 16px come nel resto del sito */
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
+    transition: var(--transition); /* Usa la transizione globale */
+    box-shadow: var(--shadow-card);
 }
 
 .faq-item:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-2px); /* Effetto hover leggero come le card musei */
+    box-shadow: 0 15px 30px rgba(179, 0, 0, 0.08); /* Ombra rossastra molto delicata */
+    border-color: rgba(179, 0, 0, 0.1);
 }
 
+/* --- Domanda (Summary) --- */
 .faq-item summary {
-    padding: 1.2rem;
+    padding: 1.5rem;
     font-weight: 600;
+    font-size: 1.05rem;
     cursor: pointer;
     list-style: none;
     position: relative;
-    padding-right: 3rem;
-    color: #1f1f2b;
+    padding-right: 3.5rem; /* Spazio per l'icona */
+    color: var(--text);
+    transition: color 0.3s ease;
 }
 
-/* Freccina personalizzata */
+/* Hover sul testo della domanda */
+.faq-item summary:hover {
+    color: var(--primary); /* Diventa rosso al passaggio del mouse */
+}
+
+/* Icona personalizzata (+ / -) */
 .faq-item summary::after {
     content: '+';
     position: absolute;
@@ -41,27 +81,50 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.5rem;
-    color: #6758ff;
-    font-weight: bold;
+    color: var(--primary); /* Icona rossa */
+    font-weight: 400;
+    transition: transform 0.3s ease;
+}
+
+/* --- Stato Aperto --- */
+.faq-item[open] {
+    border-color: rgba(179, 0, 0, 0.15); /* Bordo leggermente rosso quando aperto */
+}
+
+.faq-item[open] summary {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--primary); /* Testo rosso quando aperto */
+    background-color: #fffafa; /* Sfondo leggermente rosato chiarissimo */
 }
 
 .faq-item[open] summary::after {
     content: '-';
+    transform: translateY(-50%) rotate(180deg); /* Animazione rotazione */
 }
 
-.faq-item[open] summary {
-    border-bottom: 1px solid #f0f0f0;
-    color: #6758ff;
-}
-
+/* --- Risposta --- */
 .faq-answer {
     padding: 1.5rem;
-    color: #4b5563;
-    line-height: 1.6;
-    background-color: #f9fbff;
+    color: var(--muted); /* Grigio testo standard */
+    line-height: 1.7;
+    background-color: var(--surface);
+    font-size: 0.95rem;
 }
 
 /* Nasconde il marker default di Chrome/Safari */
 .faq-item summary::-webkit-details-marker {
     display: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .faq-item summary {
+        padding: 1.2rem;
+        font-size: 1rem;
+        padding-right: 3rem;
+    }
+
+    .faq-answer {
+        padding: 1.2rem;
+    }
 }
