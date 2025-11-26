@@ -15,6 +15,9 @@ public class Ordine {
     // Relazione 1 a * --> Ordine contiene Biglietti
     private List<Biglietto> biglietti = new ArrayList<>();
 
+    private List<TipologiaBiglietto> tipologie = new ArrayList<>();
+
+
     public Ordine() {}
 
     public Ordine(int idOrdine, LocalDateTime dataAcquisto, BigDecimal importoTotale, int idUtente) {
@@ -62,6 +65,14 @@ public class Ordine {
 
     public void setBiglietti(List<Biglietto> biglietti) {
         this.biglietti = biglietti;
+    }
+
+    public void setTipologie(List<TipologiaBiglietto> tipologie) {
+        this.tipologie = tipologie;
+    }
+
+    public List<TipologiaBiglietto> getTipologie() {
+        return tipologie;
     }
 
     @Override

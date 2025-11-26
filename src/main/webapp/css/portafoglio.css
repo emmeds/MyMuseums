@@ -1,0 +1,231 @@
+/* --- Layout Generale Portafoglio --- */
+.portfolio-section {
+    padding: 3rem 0 5rem;
+    min-height: 80vh; /* Assicura che riempia lo schermo anche con pochi ordini */
+}
+
+.portfolio-header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.portfolio-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.portfolio-subtitle {
+    color: var(--muted);
+    font-size: 1.1rem;
+}
+
+/* --- Lista Ordini (Grid/Flex) --- */
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- Card Ordine --- */
+.order-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.order-card:hover {
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-2px);
+}
+
+/* --- Intestazione Card (Sempre visibile) --- */
+.order-header {
+    padding: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    background: white;
+    user-select: none; /* Evita evidenziazione testo al click */
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.order-id {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.order-date {
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.order-total-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.order-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Icona Chevron per espandere */
+.toggle-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--surface-alt);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+    color: var(--primary);
+}
+
+.order-card.expanded .toggle-icon {
+    transform: rotate(180deg);
+    background: var(--primary);
+    color: white;
+}
+
+/* --- Dettagli Ordine (Biglietti) - Nascosto di default --- */
+.order-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--surface-alt);
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.order-card.expanded .order-details {
+    max-height: 1000px; /* Valore alto a sufficienza */
+}
+
+.tickets-list {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* --- Singolo Biglietto --- */
+.ticket-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-left: 4px solid var(--primary); /* Accento laterale */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.ticket-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.ticket-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ticket-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.ticket-qty {
+    background: var(--surface-alt);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* --- Empty State (Se non ci sono ordini) --- */
+.empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.empty-state p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 576px) {
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-total-wrapper {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .ticket-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .ticket-qty {
+        align-self: flex-start;
+    }
+}
