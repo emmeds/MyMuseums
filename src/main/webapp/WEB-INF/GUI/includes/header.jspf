@@ -38,8 +38,8 @@
                     <c:when test="${sessionScope.utente != null}">
                         <!-- Utente loggato -->
                         <span class="user-welcome">Ciao ${sessionScope.nomeUtente}!</span>
-                        <a href="${pageContext.request.contextPath}/account" style="text-decoration: none;">
-                            <button class="btn-secondary">Il mio Account</button>
+                        <a href="${pageContext.request.contextPath}/PortafoglioServlet" style="text-decoration: none;">
+                            <button class="btn-secondary">Portafoglio</button>
                         </a>
                         <a href="${pageContext.request.contextPath}/logout" style="text-decoration: none;">
                             <button class="btn-primary">Logout</button>
