@@ -150,29 +150,46 @@ public class AcquistoServlet extends HttpServlet {
             return;
         }
 
+        String metodo =  req.getParameter("metodoPagamento");
+
+        // CASO 1: PAYPAL -> Salva e basta
+        if ("paypal".equals(metodo)) {
+            salvaOrdine(ordine, session, req, resp);
+            return;
+        }
+
         String intestatario = req.getParameter("intestatario");
         String numeroCarta = req.getParameter("numeroCarta");
         String cvc = req.getParameter("cvc");
+        String scadenza = req.getParameter("scadenza");
+
+        boolean cartaOk = (numeroCarta != null && numeroCarta.matches("\\d{16}"));
+        boolean cvcOk = (cvc != null && cvc.matches("\\d{3}"));
+        boolean datiPresenti = (intestatario != null && !intestatario.isEmpty() && scadenza != null && !scadenza.isEmpty());
 
         // Validazione Pagamento (Mock)
-        if (intestatario != null && numeroCarta != null && numeroCarta.length() >= 16 && cvc != null && cvc.length() == 3) {
-            try {
-                OrdineDAO ordineDAO = new OrdineDAO();
-                int idOrdine = ordineDAO.doSave(ordine);
-
-                // Pulizia sessione
-                session.removeAttribute("ordineInCorso");
-                session.removeAttribute("nomeMuseoCheckout");
-
-                req.setAttribute("idOrdine", idOrdine);
-                req.getRequestDispatcher("/WEB-INF/GUI/successo.jsp").forward(req, resp);
-            } catch (Exception e) {
-                e.printStackTrace();
-                req.setAttribute("error", "Errore tecnico durante il salvataggio.");
-                req.getRequestDispatcher("/WEB-INF/GUI/checkout.jsp").forward(req, resp);
-            }
+        if (cartaOk && cvcOk && datiPresenti) {
+            salvaOrdine(ordine, session, req, resp);
         } else {
-            req.setAttribute("error", "Dati di pagamento non validi. Controlla il numero carta o il CVC.");
+            req.setAttribute("error", "Dati carta non validi (controlla le 16 cifre).");
+            req.getRequestDispatcher("/WEB-INF/GUI/checkout.jsp").forward(req, resp);
+        }
+    }
+
+    //funzione di utilità per salvare
+    private void salvaOrdine(Ordine ordine, HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            OrdineDAO dao = new OrdineDAO();
+            int id = dao.doSave(ordine);
+
+            session.removeAttribute("ordineInCorso");
+            session.removeAttribute("nomeMuseoCheckout");
+
+            req.setAttribute("idOrdine", id);
+            req.getRequestDispatcher("/WEB-INF/GUI/successo.jsp").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.setAttribute("error", "Errore nel salvataggio ordine.");
             req.getRequestDispatcher("/WEB-INF/GUI/checkout.jsp").forward(req, resp);
         }
     }
