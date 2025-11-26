@@ -41,14 +41,33 @@
 .logo {
     flex-shrink: 0;
     z-index: 1001;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 
 .logo h1 {
-    color: var(--primary);
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: #b30000; /* rosso Bordeaux moderno */
+
+    font-size: 3rem;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    background: linear-gradient(90deg, #b30000, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-family: "Inter", "system-ui", sans-serif;
+    letter-spacing: -1px;
+    line-height: 1.1;
     margin: 0;
+    padding: 0.5rem 0;
+
+    text-shadow: 0 3px 10px rgba(255,0,0,0.15);
+}
+.logo-image{
+    width: 5rem;
+    height: auto;
+    border-radius: 8rem;
+
 }
 
 .nav {

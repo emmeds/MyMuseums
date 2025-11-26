@@ -187,4 +187,101 @@ public class MuseoDAO {
         return museo; // Ritorna l'oggetto Museo o null se non trovato
     }
 
+    public String getSuggerimentiPerBarraRicercaPerCitta(String query) {
+        List<String> suggerimenti = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT DISTINCT Citta FROM Museo WHERE Citta LIKE ? LIMIT 5";
+
+        try {
+            connection = ConnPool.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, query + "%");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                suggerimenti.add(rs.getString("Citta"));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Errore nel recupero dei suggerimenti per la barra di ricerca", e);
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Errore chiusura risorse", e);
+            }
+        }
+
+        // Build a JSON array string (e.g. ["City1","City2"]) - escape quotes and backslashes
+        if (suggerimenti.isEmpty()) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        boolean first = true;
+        for (String s : suggerimenti) {
+            if (!first) sb.append(',');
+            first = false;
+            // simple escape for backslashes and double quotes
+            String escaped = s.replace("\\", "\\\\").replace("\"", "\\\"");
+            sb.append('"').append(escaped).append('"');
+        }
+        sb.append(']');
+        return sb.toString();
+
+    }
+
+    public List<Museo> cercaMusei(String query) {
+        List<Museo> musei = new ArrayList<>();
+        if (query == null) return musei;
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM Museo WHERE  Citta LIKE ? LIMIT 50";
+
+        try {
+            connection = ConnPool.getConnection();
+            ps = connection.prepareStatement(sql);
+            String pattern = "%" + query + "%";
+            ps.setString(1, pattern);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Museo m = new Museo();
+                m.setIdMuseo(rs.getInt("ID_Museo"));
+                m.setNome(rs.getString("Nome"));
+                m.setDescrizione(rs.getString("Descrizione"));
+                m.setImmagine(rs.getString("Immagine"));
+                m.setVia(rs.getString("Via"));
+                m.setCitta(rs.getString("Citta"));
+                m.setCap(rs.getString("Cap"));
+                m.setPrezzoTourGuidato(rs.getBigDecimal("PrezzoTourGuidato"));
+                musei.add(m);
+            }
+            LOGGER.info("cercaMusei: trovati " + musei.size() + " risultati per query='" + query + "'");
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Errore nella ricerca dei musei per query: " + query, e);
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Errore chiusura risorse", e);
+            }
+        }
+
+        return musei;
+    }
 }

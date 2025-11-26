@@ -12,10 +12,11 @@
     </c:if>
 </head>
 <body>
-    <header class="header">
+    <header class="header" data-context-path="${pageContext.request.contextPath}">
         <div class="container">
             <div class="logo">
-                <h1>🏛️ MyMuseums</h1>
+                <img src="${pageContext.request.contextPath}/images/museums.jpg" alt="MyMuseums Logo" class="logo-image">
+                <h1> MyMuseums</h1>
             </div>
 
             <button class="hamburger" id="hamburger" aria-label="Toggle menu">
