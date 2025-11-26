@@ -5,6 +5,7 @@
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
+<script src="${pageContext.request.contextPath}/JS/Homepage.js" defer></script>
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-overlay"></div>
@@ -12,9 +13,23 @@
             <h1 class="hero-title">Scopri l'Arte e la Cultura</h1>
             <p class="hero-subtitle">Acquista i tuoi biglietti per i migliori musei d'Italia in un solo click</p>
             <div class="search-box">
-                <input type="text" placeholder="Cerca un museo, una città o un'esposizione...">
-                <button class="btn-search">🔍 Cerca</button>
+                <form action="${pageContext.request.contextPath}/SearchServlet" method="get" class="search-form">
+                    <div class="input-wrap">
+                        <input class="search-input" id="search-box" name="query" type="text" placeholder="Cerca un museo, una città o un'esposizione..." autocomplete="off" aria-label="Cerca" />
+                        <ul id="suggestions"
+                            role="listbox"
+                            aria-label="Suggerimenti di ricerca"
+                            aria-live="polite"
+                            style="display: none;">
+                            <!-- I suggerimenti verranno inseriti dinamicamente qui -->
+                        </ul>
+                    </div>
+                    <button type="submit" class="btn-search">🔍 Cerca</button>
+                </form>
+
             </div>
+
+
         </div>
     </section>
 

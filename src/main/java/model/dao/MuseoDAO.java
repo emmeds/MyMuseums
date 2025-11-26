@@ -187,4 +187,54 @@ public class MuseoDAO {
         return museo; // Ritorna l'oggetto Museo o null se non trovato
     }
 
+    public String getSuggerimentiPerBarraRicercaPerCitta(String query) {
+        List<String> suggerimenti = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT DISTINCT Citta FROM Museo WHERE Citta LIKE ? LIMIT 5";
+
+        try {
+            connection = ConnPool.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, query + "%");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                suggerimenti.add(rs.getString("Citta"));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Errore nel recupero dei suggerimenti per la barra di ricerca", e);
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Errore chiusura risorse", e);
+            }
+        }
+
+        // Build a JSON array string (e.g. ["City1","City2"]) - escape quotes and backslashes
+        if (suggerimenti.isEmpty()) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        boolean first = true;
+        for (String s : suggerimenti) {
+            if (!first) sb.append(',');
+            first = false;
+            // simple escape for backslashes and double quotes
+            String escaped = s.replace("\\", "\\\\").replace("\"", "\\\"");
+            sb.append('"').append(escaped).append('"');
+        }
+        sb.append(']');
+        return sb.toString();
+
+    }
 }

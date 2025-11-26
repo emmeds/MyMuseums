@@ -6,10 +6,12 @@
 }
 
 :root {
-    --primary: #6758ff;
-    --primary-dark: #4534c1;
+    /*--primary: #6758ff;*/
+/*    --primary-dark: #4534c1;*/
+    --primary: red;
+    --primary-dark: darkred;
     --accent: #ff7a18;
-    --text: #1f1f2b;
+    --text: black;
     --muted: #6b7280;
     --surface: #ffffff;
     --surface-alt: #f5f7fb;
@@ -211,10 +213,11 @@ body {
 }
 
 .btn-search {
-    background: var(--accent);
-    color: white;
+    background: white;
+    color: black;
     padding: clamp(0.75rem, 2vw, 0.95rem) clamp(1.6rem, 3vw, 2.2rem);
     box-shadow: 0 8px 20px rgba(255, 122, 24, 0.3);
+    border: 1px red;
 }
 
 .btn-search:hover {
@@ -241,7 +244,12 @@ body {
 .hero {
     position: relative;
     min-height: clamp(500px, 75vh, 800px);
-    background: linear-gradient(135deg, #6758ff 0%, #9f53ff 55%, #ff7a18 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #b30000 60%, #ff1a1a 100%);
+
+    background-blend-mode: overlay;
+
+
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -294,24 +302,141 @@ body {
     gap: 1rem;
     max-width: 640px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem;
-    border-radius: 999px;
-    backdrop-filter: blur(10px);
+    background: transparent; /* moved visual pill to input-wrap */
+    padding: 0; /* padding handled by input-wrap */
+    position: relative; /* needed for absolute positioning of suggestions */
+    align-items: center;
+
 }
 
-.search-box input {
-    flex: 1;
+/* Ensure the search form elements are aligned horizontally */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 0; /* no gap so input and button appear flush */
+    width: 100%;
+}
+
+.input-wrap {
+    position: relative;
+    flex: 1 1 auto; /* take available space */
+    min-width: 0; /* allow flex child to shrink properly */
+    background: rgba(255, 255, 255, 0.12);
+    padding: 4px 0 4px 8px; /* reduce right padding to align with button */
+    border-radius: 999px; /* left-pill shape, right side joined to button */
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
     border: none;
-    padding: 0.85rem 1.5rem;
+    padding: 0.6rem 0.9rem; /* slightly smaller to fit inside input-wrap padding */
     font-size: 1rem;
-    border-radius: 999px;
-    color: #fff;
+    border-radius: 999px 0 0 999px; /* left rounded only */
+    color: #fff; /* input text color */
     background: transparent;
+    min-height: 44px;
+    line-height: 1;
+    box-sizing: border-box;
+    outline: none;
 }
 
-.search-box input::placeholder {
-    color: rgba(255, 255, 255, 0.8);
+
+.search-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: rgba(255,255,255,0.8);
+}
+.search-input::-moz-placeholder { /* Firefox 19+ */
+    color: rgba(255,255,255,0.8);
+    opacity: 1;
+}
+.search-input:-ms-input-placeholder { /* IE 10+ */
+    color: rgba(255,255,255,0.8);
+}
+.search-input::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(255,255,255,0.8);
+}
+
+/* Optional: change placeholder color on focus to be slightly lighter/darker */
+.search-input:focus::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Keep button fixed size */
+.btn-search {
+    margin-left: 5px;
+    flex: 0 0 auto;
+    height: 3rem;
+    width: 7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    /*border-radius: 0 999px 999px 0; !* right-pill shape *!*/
+
+    border-left: none; /* avoid seam */
+}
+
+/* Suggestions dropdown: span the full width of the input-wrap and appear attached below it */
+#suggestions {
+    position: absolute;
+    top: 100%; /* flush below input-wrap */
+    left: 0;
+    width: 100%; /* match input width */
+    margin: 0;
+    padding: 0.2rem 0;
+    list-style: none;
+    background: transparent;
+    color:white;
+    border-radius:14px; /* bottom-rounded to appear as continuation */
+    box-shadow: 0 14px 40px rgba(15,23,42,0.14);
+    z-index: 2000; /* ensure it's above hero overlays */
+    max-height: 260px;
+    overflow-y: auto;
+    display: none; /* JS toggles this */
+}
+
+#suggestions::before{
+    /* small pseudo to visually connect the pill to the dropdown */
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    right: 12px;
+    height: 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.12));
+    border-top-left-radius: 999px;
+    border-top-right-radius: 999px;
+    pointer-events: none;
+}
+
+/* Give the top corners of the dropdown slightly rounded but keep it looking like a continuation of the pill */
+.input-wrap .search-input {
+    border-bottom-left-radius: 999px;
+    border-bottom-right-radius: 0; /* keep right bottom corner flush with button */
+}
+
+#suggestions.show {
+    display: block;
+}
+
+#suggestions li {
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s ease, color 0.15s ease;
+    color: white;
+    text-align: left;
+}
+
+#suggestions li.suggestion-item:hover,
+#suggestions li.suggestion-item:focus {
+    background: linear-gradient(90deg, rgba(188,108,123,0.9), rgba(103,88,255,0.06));
+
+
+    color: black;
+    outline: none;
 }
 
 /* Features Section */
@@ -676,7 +801,7 @@ body {
     }
 
     .search-box {
-        padding: 0.6rem;
+        padding: 0.4rem;
     }
 
     .search-box input {
