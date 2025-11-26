@@ -15,7 +15,7 @@
             <div class="search-box">
                 <form action="${pageContext.request.contextPath}/SearchServlet" method="get" class="search-form">
                     <div class="input-wrap">
-                        <input class="search-input" id="search-box" name="query" type="text" placeholder="Cerca un museo, una città o un'esposizione..." autocomplete="off" aria-label="Cerca" />
+                        <input class="search-input" id="search-box" name="query" type="text" placeholder="Dove vuoi recarti? Inserisci una città..." autocomplete="off" aria-label="Cerca" />
                         <ul id="suggestions"
                             role="listbox"
                             aria-label="Suggerimenti di ricerca"
