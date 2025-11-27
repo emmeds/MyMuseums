@@ -44,8 +44,9 @@ public class AcquistoServlet extends HttpServlet {
         Utente utente = (Utente) session.getAttribute("utente");
 
         if (utente == null) {
-            String errorMsg = java.net.URLEncoder.encode("Devi effettuare il login per acquistare", StandardCharsets.UTF_8);
-            resp.sendRedirect(req.getContextPath() + "/login?error=" + errorMsg);
+            String errorMsg = "Devi effettuare il login per acquistare";
+            req.setAttribute("errorMessage", errorMsg);
+            req.getRequestDispatcher("/WEB-INF/GUI/auth/login.jsp").forward(req, resp);
             return;
         }
 

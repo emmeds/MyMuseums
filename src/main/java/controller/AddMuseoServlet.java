@@ -92,7 +92,7 @@ public class AddMuseoServlet extends HttpServlet {
                 tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t2);
 
                 TipologiaBiglietto t3 = new TipologiaBiglietto();
-                t3.setNome("SaltaFila");
+                t3.setNome("Salta la Fila");
                 t3.setIdMuseo(idMuseo);
                 t3.setPrezzo(prezzoSaltaFila);
                 tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t3);

@@ -84,7 +84,7 @@
 
 
                 <div class="form-row">
-                    <label for="prezzoTourGuidato" style="width:50%;margin-top: 10px">Prezzo Tour-Guidato (€)</label>
+                    <label for="prezzoTourGuidato" style="width:50%;margin-top: 10px">Sovrapprezzo Tour-Guidato (+ €)</label>
                     <input type="number" id="prezzoTourGuidato" name="prezzoTourGuidato" step="5" min="0" required style="width:29%;">
 
                 </div>

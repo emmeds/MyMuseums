@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/DettaglioMuseo.css">
 
 <body>
@@ -88,7 +89,7 @@
                         </label>
                     </div>
 
-                    <button type="submit" class="btn-buy">Aggiungi al Carrello</button>
+                    <button type="submit" class="btn-buy">Acquista ora</button>
                     <p id="error-msg" style="color: red; display: none; margin-top: 10px;">Seleziona almeno un biglietto.</p>
                 </div>
             </div>

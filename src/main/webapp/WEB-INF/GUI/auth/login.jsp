@@ -39,16 +39,11 @@
                         <input type="password" id="password" name="password" required placeholder="Inserisci la tua password">
                     </div>
 
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="ricordami" name="ricordami">
-                        <label for="ricordami">Ricordami</label>
-                    </div>
+
 
                     <button type="submit" class="btn-auth">Accedi</button>
 
-                    <div class="auth-links">
-                        <a href="#" class="forgot-password">Password dimenticata?</a>
-                    </div>
+                    
 
                     <div class="auth-footer">
                         <p>Non hai un account? <a href="${pageContext.request.contextPath}/registrazione">Registrati</a></p>

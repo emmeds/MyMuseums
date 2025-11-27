@@ -65,10 +65,7 @@
                         <input type="password" id="confermaPassword" name="confermaPassword" required placeholder="Ripeti la password">
                     </div>
 
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="accettaTermini" name="accettaTermini" required>
-                        <label for="accettaTermini">Accetto i <a href="#">Termini e Condizioni</a> e la <a href="#">Privacy Policy</a></label>
-                    </div>
+                    
 
                     <button type="submit" class="btn-auth">Registrati</button>
 

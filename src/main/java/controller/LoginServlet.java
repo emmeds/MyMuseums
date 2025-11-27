@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         // Recupera i parametri del form
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String ricordami = request.getParameter("ricordami");
+
 
         LOGGER.fine(() -> "Login attempt for email=" + email);
 
@@ -85,12 +85,7 @@ public class LoginServlet extends HttpServlet {
                     return;
                 }
 
-                // Se "Ricordami" è selezionato, imposta un timeout più lungo (30 giorni)
-                if (ricordami != null) {
-                    session.setMaxInactiveInterval(30 * 24 * 60 * 60); // 30 giorni in secondi
-                } else {
-                    session.setMaxInactiveInterval(30 * 60); // 30 minuti
-                }
+
 
                 LOGGER.info("Login riuscito per email=" + email + " idUtente=" + utente.getIdUtente());
 

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
 <script src="${pageContext.request.contextPath}/JS/Homepage.js" defer></script>
     <!-- Hero Section -->
@@ -122,7 +123,7 @@
     <section class="cta">
         <div class="container">
             <h2>Inizia la Tua Avventura Culturale</h2>
-            <p>Registrati ora e ricevi uno sconto del 10% sul tuo primo acquisto!</p>
+            <p>Registrati ora e inizia ad acquistare!</p>
             <button class="btn-cta">Registrati Gratuitamente</button>
         </div>
     </section>
