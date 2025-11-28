@@ -124,7 +124,7 @@
         <div class="container">
             <h2>Inizia la Tua Avventura Culturale</h2>
             <p>Registrati ora e inizia ad acquistare!</p>
-            <button class="btn-cta">Registrati Gratuitamente</button>
+            <button class="btn-primary">Registrati Gratuitamente</button>
         </div>
     </section>
 <%@ include file="includes/footer.jspf" %>

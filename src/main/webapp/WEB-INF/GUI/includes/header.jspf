@@ -44,9 +44,30 @@
                     <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                     <li><a class="" href="${pageContext.request.contextPath}/faq/faq.jsp">FAQ</a></li>
 
+                    <!-- Auth links for mobile menu -->
+                    <c:choose>
+                        <c:when test="${sessionScope.utente != null}">
+                            <li class="nav-auth-item mobile-only">
+                                <a href="${pageContext.request.contextPath}/PortafoglioServlet">Portafoglio</a>
+                            </li>
+                            <li class="nav-auth-item mobile-only">
+                                <a href="${pageContext.request.contextPath}/logout" class="nav-logout">Logout</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-auth-item mobile-only">
+                                <a href="${pageContext.request.contextPath}/login">Accedi</a>
+                            </li>
+                            <li class="nav-auth-item mobile-only">
+                                <a href="${pageContext.request.contextPath}/registrazione" class="nav-register">Registrati</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </nav>
-            <div class="header-actions">
+
+            <!-- Desktop auth buttons (hidden on mobile) -->
+            <div class="header-actions desktop-only">
                 <c:choose>
                     <c:when test="${sessionScope.utente != null}">
                         <!-- Utente loggato -->
