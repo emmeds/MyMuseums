@@ -12,7 +12,7 @@
 <c:set var="pageCss" value="./css/faq/faq.css" scope="request" />
 
 <%-- 2. Includi l'header (che ora leggerà la variabile pageCss) --%>
-<%@ include file="../includes/header.jspf" %>
+<%@ include file="../WEB-INF/GUI/includes/header.jspf" %>
 
 <section class="page-hero" >
     <div class="container">
@@ -57,4 +57,4 @@
 </section>
 
 <%-- 3. Includi il footer --%>
-<%@ include file="../includes/footer.jspf" %>
+<%@ include file="../WEB-INF/GUI/includes/footer.jspf" %>

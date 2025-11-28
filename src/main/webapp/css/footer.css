@@ -1,39 +1,205 @@
-/* Footer-specific styles extracted from Homepage.css */
+/* Footer-specific styles extracted from Homepage.css
+   Refactored: modern look, improved spacing, removed large fixed margins, responsive grid
+*/
 :root {
     --accent: #ff7a18;
-    --text: #1f1f2b;
+    --primary: #0f1724;
+    --bg: #081226;
+    --text: #e6eef6;
+    --muted: rgba(255,255,255,0.75);
+    --radius: 10px;
+    --gap: 1.25rem;
 }
 
 .footer {
-    background: #111827;
-    color: white;
-    padding: 3rem 0 1.5rem;
+    background: linear-gradient(180deg, var(--bg) 0%, #0b1630 100%);
+    color: var(--text);
+    padding: 3rem 1rem;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
+/* Center container and responsive grid */
 .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--gap);
+    align-items: start;
 }
 
-.footer-column a {
-    color: rgba(255, 255, 255, 0.8);
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
 }
 
-.footer-column a:hover {
+.footer-column h4 {
+    margin: 0 0 0.4rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.2px;
+}
+
+.footer-column p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Link column specifics */
+.link-column {
+    margin: 0; /* remove large fixed offset */
+    padding: 0;
+}
+
+.link-column ul {
+    margin: 0;
+    padding: 0 0 0 0.4rem; /* small left padding so links are inset a bit */
+    list-style: none;
+}
+
+.link-column li {
+    margin: 0.35rem 0;
+}
+
+/* Make footer-scoped link selector more specific to avoid being overridden elsewhere */
+.footer .link-column a,
+.footer .link-column a:link,
+.footer .link-column a:visited {
+    color: rgba(255,255,255,0.88); /* slightly higher contrast than --muted */
+    display: inline-block;
+    text-decoration: none;
+    transition: color 180ms ease, transform 160ms ease;
+    padding-left: 0.15rem; /* tiny visual separation from bullet/edge */
+}
+
+/* FAQ link: separate header vs footer styles so we don't force white text on a light header */
+.footer .link-column a.faq-link {
+    color: rgba(255,255,255,0.92) !important; /* light color for footer */
+    margin-left: 0.45rem;
+    padding-left: 0.15rem;
+    transition: color 180ms ease, transform 160ms ease;
+}
+
+.header .nav a.faq-link {
+    /* Use header's color scale for visibility on light header background */
+    color: var(--primary, #b30000) !important; /* fallback if variable not present */
+    margin-left: 0.45rem;
+    padding-left: 0.15rem;
+    transition: color 140ms ease, transform 120ms ease;
+}
+
+/* Hover/focus states */
+.footer .link-column a.faq-link:hover,
+.footer .link-column a.faq-link:focus {
+    color: var(--accent) !important;
+    transform: translateX(6px);
+    text-decoration: underline;
+}
+
+.header .nav a.faq-link:hover,
+.header .nav a.faq-link:focus {
+    color: var(--primary-dark, #800000) !important;
+    transform: translateX(4px);
+    text-decoration: none;
+}
+
+.footer .link-column a:hover,
+.footer .link-column a:focus,
+.header .nav a.faq-link:hover,
+.header .nav a.faq-link:focus,
+.faq-link:hover,
+.faq-link:focus {
+    color: var(--accent) !important;
+    transform: translateX(6px);
+    outline: none;
+    text-decoration: underline;
+}
+
+/* FAQ-specific tweaks: slight left offset and stronger hover underline for visibility */
+.footer .link-column a[href$="/faq"] {
+    margin-left: 0.5rem;
+    padding-left: 0.2rem;
+}
+
+.footer .link-column a[href$="/faq"]:hover,
+.footer .link-column a[href$="/faq"]:focus {
     color: var(--accent);
+    text-decoration: underline;
+    transform: translateX(6px);
 }
 
+/* Ensure focus is visible for keyboard users */
+.footer .link-column a:focus {
+    box-shadow: 0 0 0 3px rgba(255,122,24,0.12);
+    border-radius: 6px;
+}
+
+/* Footer bottom bar */
 .footer-bottom {
-    margin-top: 1.5rem;
+    margin-top: 1.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.04);
     text-align: center;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.65);
+    font-size: 0.92rem;
 }
 
+.footer-raw {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Small decorative blocks (optional) */
+.footer-badge {
+    background: rgba(255,255,255,0.03);
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* Accessibility: focus states */
+.footer-column a:focus {
+    box-shadow: 0 0 0 3px rgba(255,122,24,0.12);
+    border-radius: 6px;
+}
+
+/* Mobile tweaks */
 @media (max-width: 640px) {
+    .footer {
+        padding: 2rem 0.75rem;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1rem;
+    }
+
+    .footer-column h4 {
+        font-size: 1.02rem;
+    }
+
+    .footer-bottom {
+        font-size: 0.9rem;
     }
 }
+.colonna{
+    margin-left: 40rem;
+}
 
+/* Larger screens: increase spacing */
+@media (min-width: 1200px) {
+    .footer {
+        padding: 4rem 1rem;
+    }
+
+    .footer-grid {
+        gap: 1.75rem;
+    }
+}
