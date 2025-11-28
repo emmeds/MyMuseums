@@ -187,7 +187,7 @@ public class AcquistoServlet extends HttpServlet {
             session.removeAttribute("nomeMuseoCheckout");
 
             req.setAttribute("idOrdine", id);
-            req.getRequestDispatcher("/WEB-INF/GUI/successo.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/GUI/OrdineConfermato.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Errore nel salvataggio ordine.");

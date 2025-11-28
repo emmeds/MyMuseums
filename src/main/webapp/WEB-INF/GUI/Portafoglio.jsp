@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<c:set var="pageCss" value="css/portafoglio.css" scope="request" />
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -9,11 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il tuo Portafoglio - MyMuseums</title>
 
-    <!-- CSS Principali -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
-    <!-- CSS Specifico Portafoglio -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/portafoglio.css">
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">

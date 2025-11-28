@@ -1,14 +1,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyMuseums - Biglietti per Musei</title>
+
+    <!-- Central font import so pages don't need to duplicate it -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 
     <c:if test="${not empty pageCss}">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/${pageCss}">
+        <c:forEach var="p" items="${fn:split(pageCss, ',')}">
+            <c:choose>
+                <c:when test="${fn:startsWith(p, '/')}">
+                    <link rel="stylesheet" href="${pageContext.request.contextPath}${p}" />
+                </c:when>
+                <c:otherwise>
+                    <link rel="stylesheet" href="${pageContext.request.contextPath}/${p}" />
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
     </c:if>
 </head>
 <body>

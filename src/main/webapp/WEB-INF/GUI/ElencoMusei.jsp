@@ -1,10 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="pageCss" value="css/Homepage.css,css/elencomusei.css" scope="request" />
+
 <%@ include file="includes/header.jspf" %>
-<!-- Include common styles first, then page-specific overrides -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/elencomusei.css">
 
 <section class="container" style="padding:2rem 0;">
     <div class="container">
@@ -28,7 +27,7 @@
                                     <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
                                     <div class="museum-footer">
                                         <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
-                                        <button class="btn-primary">Prenota Ora</button>
+                                        <button class="btn-primary">Acquista Ora</button>
                                     </div>
                                 </div>
                             </div>

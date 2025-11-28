@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
+<c:set var="pageCss" value="css/Homepage.css" scope="request" />
 <!DOCTYPE html>
 <html lang="it">
 <%@ include file="includes/header.jspf" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Homepage.css">
 <script src="${pageContext.request.contextPath}/JS/Homepage.js" defer></script>
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -85,7 +85,7 @@
                             <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
                             <div class="museum-footer">
                                 <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
-                                <button class="btn-primary">Prenota Ora</button>
+                                <button class="btn-primary">Acquista Ora</button>
                             </div>
                         </div>
                     </div>

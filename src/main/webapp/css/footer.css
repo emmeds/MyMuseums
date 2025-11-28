@@ -5,15 +5,15 @@
     --accent: #ff7a18;
     --primary: #0f1724;
     --bg: #081226;
-    --text: #e6eef6;
-    --muted: rgba(255,255,255,0.75);
+    --textfooter:  white;
     --radius: 10px;
     --gap: 1.25rem;
 }
 
 .footer {
     background: linear-gradient(180deg, var(--bg) 0%, #0b1630 100%);
-    color: var(--text);
+    
+    color: var(--textfooter);
     padding: 3rem 1rem;
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
@@ -38,7 +38,7 @@
     margin: 0 0 0.4rem 0;
     font-size: 1rem;
     font-weight: 700;
-    color: var(--text);
+    color: var(--textfooter);
     letter-spacing: 0.2px;
 }
 
