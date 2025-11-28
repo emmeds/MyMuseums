@@ -69,7 +69,7 @@
         <h2 class="section-title">Musei Più Popolari</h2>
         <div class="museums-grid">
 
-            <c:forEach items="${musei}" var="museo">
+            <c:forEach items="${musei}" var="museo" varStatus="status">
                 <a href="${pageContext.request.contextPath}/DettagliMuseoServlet?id=${museo.idMuseo}" class="card-link">
                     <div class="museum-card">
                         <div class="museum-image">
@@ -84,8 +84,8 @@
                             <p class="museum-location">📍 <c:out value="${museo.citta}"/></p>
                             <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
                             <div class="museum-footer">
-                                <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
-                                <button class="btn-primary">Acquista Ora</button>
+                                <span class="price">Da €<c:out value="${tipologieRid[status.index].prezzo}"/></span>
+                                <button class="btn-primary">Dettagli</button>
                             </div>
                         </div>
                     </div>

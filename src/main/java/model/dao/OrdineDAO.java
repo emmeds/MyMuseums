@@ -5,6 +5,8 @@ import model.bean.Ordine;
 import model.utils.ConnPool;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,4 +79,39 @@ public class OrdineDAO {
         }
         return idOrdineGenerato;
     }
+
+    /**
+     * Recupera tutti gli ordini effettuati da uno specifico utente.
+     */
+    public List<Ordine> doRetrieveOrdersById(int idUtente) {
+        List<Ordine> list = new ArrayList<>();
+        String query = "SELECT * FROM ordine WHERE ID_Utente = ?";
+
+        try (Connection con = ConnPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ordine o = new Ordine();
+                o.setIdOrdine(rs.getInt("ID_Ordine"));
+
+                // Conversione da SQL Timestamp a LocalDateTime
+                Timestamp timestamp = rs.getTimestamp("DataAcquisto");
+                if (timestamp != null) {
+                    o.setDataAcquisto(timestamp.toLocalDateTime());
+                }
+
+                o.setImportoTotale(rs.getBigDecimal("ImportoTotale"));
+                o.setIdUtente(rs.getInt("ID_Utente"));
+
+                list.add(o);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
 }

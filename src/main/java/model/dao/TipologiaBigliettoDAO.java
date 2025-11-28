@@ -66,4 +66,52 @@ public class TipologiaBigliettoDAO {
             }
         }
     }
+
+    public TipologiaBiglietto doRetrieveTipologiaById(int idTipologia) {
+        TipologiaBiglietto t = null;
+        String query = "SELECT * FROM tipologia_biglietto WHERE ID_Tipologia = ?";
+
+        try (Connection con = ConnPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, idTipologia);
+            ResultSet rs = ps.executeQuery();
+
+            // Uso IF perchè l'ID è univoco (ne esiste massimo uno)
+            if (rs.next()) {
+                t = new TipologiaBiglietto();
+                t.setIdTipologia(rs.getInt("ID_Tipologia"));
+                t.setNome(rs.getString("Nome"));
+                t.setPrezzo(rs.getBigDecimal("Prezzo"));
+                t.setIdMuseo(rs.getInt("ID_Museo"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return t; // Ritorna l'oggetto o null se non trovato
+    }
+
+    public static TipologiaBiglietto doRetrieveTipologiaRidByMuseoId(int idMuseo) {
+        TipologiaBiglietto t = null;
+        String query = "SELECT * FROM tipologia_biglietto WHERE ID_Museo = ? AND Nome = 'Ridotto'";
+
+        try (Connection con = ConnPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, idMuseo);
+            ResultSet rs = ps.executeQuery();
+
+            // Uso IF perchè l'ID è univoco (ne esiste massimo uno)
+            if (rs.next()) {
+                t = new TipologiaBiglietto();
+                t.setIdTipologia(rs.getInt("ID_Tipologia"));
+                t.setNome(rs.getString("Nome"));
+                t.setPrezzo(rs.getBigDecimal("Prezzo"));
+                t.setIdMuseo(rs.getInt("ID_Museo"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return t; // Ritorna l'oggetto o null se non trovato
+    }
 }
