@@ -45,6 +45,10 @@
                                         <span class="date-placeholder" data-iso="${ordine.dataAcquisto}">
                                                 ${ordine.dataAcquisto}
                                         </span>
+                                        
+                                                <span class="order-time">Orario visita:${ordine.orarioVisita}</span>
+
+
                                     </div>
                                 </div>
 

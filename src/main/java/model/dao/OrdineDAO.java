@@ -19,7 +19,10 @@ public class OrdineDAO {
         PreparedStatement psBiglietto = null;
         int idOrdineGenerato = -1;
 
-        String queryOrdine = "INSERT INTO Ordine (DataAcquisto, ImportoTotale, ID_Utente) VALUES (CURRENT_TIMESTAMP, ?, ?)";
+        String queryOrdine = "INSERT INTO Ordine (DataAcquisto, ImportoTotale, ID_Utente,OrarioVisita) VALUES (CURRENT_TIMESTAMP, ?, ?,?)";
+        System.out.println("QUERY ESEGUITA: " + queryOrdine);
+
+
         String queryBiglietto = "INSERT INTO Biglietto (DataVisita, Quantita, ID_Ordine, ID_Tipologia) VALUES (?, ?, ?, ?)";
 
         try {
@@ -30,6 +33,7 @@ public class OrdineDAO {
             psOrdine = connection.prepareStatement(queryOrdine, Statement.RETURN_GENERATED_KEYS);
             psOrdine.setBigDecimal(1, ordine.getImportoTotale());
             psOrdine.setInt(2, ordine.getIdUtente());
+            psOrdine.setString(3, ordine.getOrarioVisita());
 
             int affectedRows = psOrdine.executeUpdate();
             if (affectedRows == 0) throw new SQLException("Creazione ordine fallita.");
@@ -105,7 +109,7 @@ public class OrdineDAO {
 
                 o.setImportoTotale(rs.getBigDecimal("ImportoTotale"));
                 o.setIdUtente(rs.getInt("ID_Utente"));
-
+                o.setOrarioVisita(rs.getString("OrarioVisita"));
                 list.add(o);
             }
         } catch (SQLException e) {

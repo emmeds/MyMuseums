@@ -11,6 +11,7 @@ public class Ordine {
     private LocalDateTime dataAcquisto;
     private BigDecimal importoTotale;
     private int idUtente;
+    private String orarioVisita;
 
     // Relazione 1 a * --> Ordine contiene Biglietti
     private List<Biglietto> biglietti = new ArrayList<>();
@@ -20,13 +21,19 @@ public class Ordine {
 
     public Ordine() {}
 
-    public Ordine(int idOrdine, LocalDateTime dataAcquisto, BigDecimal importoTotale, int idUtente) {
+    public Ordine(int idOrdine, LocalDateTime dataAcquisto, BigDecimal importoTotale, int idUtente, String orarioVisita) {
         this.idOrdine = idOrdine;
         this.dataAcquisto = dataAcquisto;
         this.importoTotale = importoTotale;
         this.idUtente = idUtente;
+        this.orarioVisita = orarioVisita;
     }
-
+    public String getOrarioVisita() {
+        return orarioVisita;
+    }
+    public void setOrarioVisita(String orarioVisita) {
+        this.orarioVisita = orarioVisita;
+    }
     public int getIdOrdine() {
         return idOrdine;
     }

@@ -36,6 +36,13 @@
                     <div class="form-group">
                         <label>Data Visita:</label>
                         <input type="date" name="dataVisita" class="form-control" required>
+                        <select name="orarioVisita" class="form-control" required>
+                            <option value="" disabled selected>Seleziona Orario</option>
+                            <option value="9:00-11:00">9:00 - 11:00</option>
+                            <option value="11:00-13:00">11:00 - 13:00</option>
+                            <option value="14:00-16:00">14:00 - 16:00</option>
+                            <option value="16:00-18:00">16:00 - 18:00</option>
+                        </select>
                     </div>
 
                     <br>

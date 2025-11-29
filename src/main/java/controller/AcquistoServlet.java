@@ -106,6 +106,7 @@ public class AcquistoServlet extends HttpServlet {
 
                     totale = totale.add(tipoReale.getPrezzo().multiply(new BigDecimal(qta)));
 
+
                     Biglietto b = new Biglietto();
                     b.setDataVisita(dataVisita);
                     b.setQuantita(qta);
@@ -128,6 +129,7 @@ public class AcquistoServlet extends HttpServlet {
 
             ordineTemp.setImportoTotale(totale);
             ordineTemp.setBiglietti(bigliettiSelezionati);
+            ordineTemp.setOrarioVisita(req.getParameter("orarioVisita"));
 
             // Salvataggio in sessione e forward al Checkout
             session.setAttribute("ordineInCorso", ordineTemp);

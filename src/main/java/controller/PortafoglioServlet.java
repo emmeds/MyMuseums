@@ -42,6 +42,7 @@ public class PortafoglioServlet extends HttpServlet {
             for(Ordine ordine : ordini) {
                 List<Biglietto> biglietti = bigliettoDAO.doRetrieveBigliettiById(ordine.getIdOrdine());
                 ordine.setBiglietti(biglietti);
+                
 
                 for(Biglietto biglietto : biglietti) {
                     // Chiamo il metodo che ora restituisce un SINGOLO oggetto
