@@ -25,6 +25,198 @@
     margin: 0 auto;
 }
 
+/* --- Sezione Guida: Come Visitare i Musei --- */
+.guide-section {
+    padding: 3rem 0 4rem 0;
+    background: linear-gradient(to bottom, #fafafa 0%, #ffffff 100%);
+}
+
+.guide-title {
+    font-size: clamp(2rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.guide-intro {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.guide-steps {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.guide-step {
+    background: var(--surface);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    transition: var(--transition);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.guide-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(179, 0, 0, 0.08);
+    border-color: rgba(179, 0, 0, 0.15);
+}
+
+/* Step evidenziato (consigli utili) */
+.guide-step.highlight {
+    background: linear-gradient(135deg, #fff9f9 0%, #fffafa 100%);
+    border-color: rgba(179, 0, 0, 0.2);
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary) 0%, #ff1a1a 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(179, 0, 0, 0.3);
+}
+
+.guide-step.highlight .step-number {
+    background: linear-gradient(135deg, #ff9500 0%, #ffb800 100%);
+    box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3);
+    font-size: 1.8rem;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.step-content p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.step-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 1rem 0;
+}
+
+.step-content ul li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+    color: var(--text);
+    font-size: 0.98rem;
+}
+
+.step-content ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Lista annidata */
+.step-content ul.nested-list {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.step-content ul.nested-list li {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+
+.step-content ul.nested-list li::before {
+    content: '→';
+    color: #666;
+}
+
+.step-note {
+    background: #fffbf0;
+    border-left: 4px solid #ff9500;
+    padding: 1rem 1.25rem;
+    margin-top: 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.step-note strong {
+    color: #ff9500;
+}
+
+/* Responsive per la guida */
+@media (max-width: 768px) {
+    .guide-section {
+        padding: 2rem 0 3rem 0;
+    }
+
+    .guide-step {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .step-number {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    .guide-step.highlight .step-number {
+        font-size: 1.6rem;
+    }
+
+    .step-content h3 {
+        font-size: 1.25rem;
+    }
+
+    .step-content ul li {
+        padding-left: 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .guide-step {
+        padding: 1.25rem;
+    }
+
+    .step-content ul.nested-list {
+        margin-left: 0.5rem;
+    }
+}
+
 /* --- FAQ Container --- */
 .faq-section {
     padding-bottom: 5rem;

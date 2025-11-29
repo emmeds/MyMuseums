@@ -52,7 +52,7 @@
                             <div class="order-header" onclick="toggleOrder(${ordine.idOrdine})">
                                 <div class="order-info">
                                     <div class="order-id">
-                                        <span># Ordine ${ordine.idOrdine}</span>
+                                        <span>Ordine #${ordine.idOrdine}</span>
                                     </div>
                                     <div class="order-date">
                                         <span class="date-placeholder" data-iso="${ordine.dataAcquisto}">
@@ -71,7 +71,7 @@
                                         Totale: € <fmt:formatNumber value="${ordine.importoTotale}" minFractionDigits="2" maxFractionDigits="2"/>
                                     </div>
 
-                               
+
                                     <!-- Differenza (importoTotale - somma) -->
                                     <c:if test="${differenza != 0}">
                                         <div class="order-diff" style="font-size: 0.9rem; color: #666;">
