@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="pageCss" value="css/portafoglio.css" scope="request" />
 
@@ -34,6 +35,18 @@
                 <div class="orders-container">
                     <c:forEach items="${ordini}" var="ordine">
 
+                        <!-- Calcolo: somma (prezzo × quantità) per tutti i biglietti -->
+                        <c:set var="sommaPrezziQuantita" value="0" />
+
+                        <c:forEach items="${ordine.biglietti}" var="biglietto" varStatus="bigliettoStatus">
+                            <c:set var="tipologiaCorrente" value="${ordine.tipologie[bigliettoStatus.index]}" />
+                            <c:set var="lineTotal" value="${tipologiaCorrente.prezzo * biglietto.quantita}" />
+                            <c:set var="sommaPrezziQuantita" value="${sommaPrezziQuantita + lineTotal}" />
+                        </c:forEach>
+
+                        <!-- Differenza: importoTotale - somma(prezzo × quantità) -->
+                        <c:set var="differenza" value="${ordine.importoTotale - sommaPrezziQuantita}" />
+
                         <div class="order-card" id="order-${ordine.idOrdine}">
                             <!-- Intestazione Ordine (Cliccabile) -->
                             <div class="order-header" onclick="toggleOrder(${ordine.idOrdine})">
@@ -45,7 +58,7 @@
                                         <span class="date-placeholder" data-iso="${ordine.dataAcquisto}">
                                                 ${ordine.dataAcquisto}
                                         </span>
-                                        
+
                                                 <span class="order-time">Orario visita:${ordine.orarioVisita}</span>
 
 
@@ -53,12 +66,23 @@
                                 </div>
 
                                 <div class="order-total-wrapper">
-                                    <div class="order-price">€ ${ordine.importoTotale}</div>
+                                    <!-- Importo totale pagato -->
+                                    <div class="order-price">
+                                        Totale: € <fmt:formatNumber value="${ordine.importoTotale}" minFractionDigits="2" maxFractionDigits="2"/>
+                                    </div>
+
+                               
+                                    <!-- Differenza (importoTotale - somma) -->
+                                    <c:if test="${differenza != 0}">
+                                        <div class="order-diff" style="font-size: 0.9rem; color: #666;">
+                                            Servizi extra: € <fmt:formatNumber value="${differenza}" minFractionDigits="2" maxFractionDigits="2"/>
+                                        </div>
+                                    </c:if>
+
                                     <div class="toggle-icon">
-                                        <!-- SOSTITUITO SVG CON CARATTERE UNICODE (Freccia giù) -->
                                         <span style="font-size: 14px;">&#9660;</span>
                                     </div>
-                                </div>
+                                 </div>
                             </div>
 
                             <!-- Dettagli Biglietti -->
