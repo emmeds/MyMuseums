@@ -60,9 +60,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            // Crea il DAO e tenta il login
-            UtenteDAO utenteDAO = new UtenteDAO();
-            Utente utente = utenteDAO.doLogin(email, password);
+            Utente utente = doLogin(email, password);
 
             if (utente != null) {
                 // Login riuscito - Crea la sessione
@@ -86,7 +84,6 @@ public class LoginServlet extends HttpServlet {
                 }
 
 
-
                 LOGGER.info("Login riuscito per email=" + email + " idUtente=" + utente.getIdUtente());
 
                 // Redirect alla home page
@@ -107,5 +104,18 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("email", email);
             request.getRequestDispatcher("/WEB-INF/GUI/auth/login.jsp").forward(request, response);
         }
+    }
+
+    /**
+     * Effettua il login dell'utente verificando email e password.
+     * Metodo package-private per facilità di testing.
+     *
+     * @param email email dell'utente
+     * @param password password dell'utente
+     * @return Utente se login riuscito, null se credenziali errate
+     */
+    Utente doLogin(String email, String password) {
+        UtenteDAO utenteDAO = new UtenteDAO();
+        return utenteDAO.doLogin(email, password);
     }
 }
