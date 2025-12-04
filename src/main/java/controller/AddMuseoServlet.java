@@ -1,6 +1,5 @@
 package controller;
 
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -20,7 +19,6 @@ public class AddMuseoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Mostriamo la pagina di inserimento (se necessario)
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/GUI/admin/admin.jsp");
         rd.forward(request, response);
     }
@@ -40,7 +38,6 @@ public class AddMuseoServlet extends HttpServlet {
         String sPrezzoSaltaFila = request.getParameter("prezzoSaltaFila");
         String sPrezzoTour = request.getParameter("prezzoTourGuidato");
 
-        // Validazione minima server-side
         if (isNullOrEmpty(nome) || isNullOrEmpty(via) || isNullOrEmpty(citta) || isNullOrEmpty(cap)
                 || isNullOrEmpty(descrizione) || isNullOrEmpty(immagine)
                 || isNullOrEmpty(sPrezzoStandard) || isNullOrEmpty(sPrezzoRidotto) || isNullOrEmpty(sPrezzoSaltaFila) || isNullOrEmpty(sPrezzoTour)) {
@@ -65,7 +62,6 @@ public class AddMuseoServlet extends HttpServlet {
         }
 
         Museo museo = new Museo();
-        MuseoDAO museoDAO = new MuseoDAO();
         museo.setNome(nome);
         museo.setVia(via);
         museo.setCitta(citta);
@@ -75,28 +71,8 @@ public class AddMuseoServlet extends HttpServlet {
         museo.setPrezzoTourGuidato(prezzoTour);
 
         try {
-            int idMuseo = museoDAO.doSave(museo);
+            int idMuseo = addMuseo(museo, prezzoStandard, prezzoRidotto, prezzoSaltaFila);
             if (idMuseo > 0) {
-                TipologiaBigliettoDAO tipologiaBigliettoDAO = new TipologiaBigliettoDAO();
-
-                TipologiaBiglietto t1 = new TipologiaBiglietto();
-                t1.setNome("Standard");
-                t1.setIdMuseo(idMuseo);
-                t1.setPrezzo(prezzoStandard);
-                tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t1);
-
-                TipologiaBiglietto t2 = new TipologiaBiglietto();
-                t2.setNome("Ridotto");
-                t2.setIdMuseo(idMuseo);
-                t2.setPrezzo(prezzoRidotto);
-                tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t2);
-
-                TipologiaBiglietto t3 = new TipologiaBiglietto();
-                t3.setNome("Salta la Fila");
-                t3.setIdMuseo(idMuseo);
-                t3.setPrezzo(prezzoSaltaFila);
-                tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t3);
-
                 String success = "Museo aggiunto con successo (id=" + idMuseo + ").";
                 logger.info(success);
                 request.setAttribute("successMessage", success);
@@ -110,9 +86,47 @@ public class AddMuseoServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Errore interno: " + e.getMessage());
         }
 
-        // Forward alla pagina admin per mostrare il messaggio
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/GUI/admin/admin.jsp");
         rd.forward(request, response);
+    }
+
+    /**
+     * Salva il museo con le relative tipologie biglietto.
+     * Metodo package-private per facilità di testing.
+     *
+     * @param museo il museo da salvare
+     * @param prezzoStandard prezzo biglietto standard
+     * @param prezzoRidotto prezzo biglietto ridotto
+     * @param prezzoSaltaFila prezzo biglietto salta la fila
+     * @return ID del museo salvato (> 0 se successo, -1 se errore)
+     */
+    int addMuseo(Museo museo, BigDecimal prezzoStandard, BigDecimal prezzoRidotto, BigDecimal prezzoSaltaFila) {
+        MuseoDAO museoDAO = new MuseoDAO();
+        int idMuseo = museoDAO.doSave(museo);
+
+        if (idMuseo > 0) {
+            TipologiaBigliettoDAO tipologiaBigliettoDAO = new TipologiaBigliettoDAO();
+
+            TipologiaBiglietto t1 = new TipologiaBiglietto();
+            t1.setNome("Standard");
+            t1.setIdMuseo(idMuseo);
+            t1.setPrezzo(prezzoStandard);
+            tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t1);
+
+            TipologiaBiglietto t2 = new TipologiaBiglietto();
+            t2.setNome("Ridotto");
+            t2.setIdMuseo(idMuseo);
+            t2.setPrezzo(prezzoRidotto);
+            tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t2);
+
+            TipologiaBiglietto t3 = new TipologiaBiglietto();
+            t3.setNome("Salta la Fila");
+            t3.setIdMuseo(idMuseo);
+            t3.setPrezzo(prezzoSaltaFila);
+            tipologiaBigliettoDAO.doSaveTipologiaBiglietto(t3);
+        }
+
+        return idMuseo;
     }
 
     private boolean isNullOrEmpty(String s) {
