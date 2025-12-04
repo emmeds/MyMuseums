@@ -15,13 +15,11 @@ import java.util.logging.Logger;
 @WebServlet("/registrazione")
 public class RegistrazioneServlet extends HttpServlet {
 
-    // Aggiunto logger per tracciare eventi e errori
     private static final Logger LOGGER = Logger.getLogger(RegistrazioneServlet.class.getName());
 
     @Override
     public void init() throws ServletException {
         super.init();
-        // Imposta il livello del logger per questo servlet.
         LOGGER.setLevel(Level.FINE);
         LOGGER.info("RegistrazioneServlet inizializzato, livello di log impostato a FINE");
     }
@@ -29,7 +27,6 @@ public class RegistrazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Mostra la pagina di registrazione
         LOGGER.fine("Mostro pagina di registrazione (doGet)");
         request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
     }
@@ -39,87 +36,30 @@ public class RegistrazioneServlet extends HttpServlet {
             throws ServletException, IOException {
         LOGGER.info("RegistrazioneServlet: doPost called");
 
-        // Recupera i parametri dal form
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confermaPassword = request.getParameter("confermaPassword");
 
-        // Log dei parametri non sensibili
         LOGGER.fine(() -> String.format("Parametri ricevuti: nome='%s', cognome='%s', email='%s'", nome, cognome, email));
 
-        // Validazioni lato server
-        if (nome == null || nome.trim().isEmpty() ||
-                cognome == null || cognome.trim().isEmpty() ||
-                email == null || email.trim().isEmpty() ||
-                password == null || password.trim().isEmpty() ||
-                confermaPassword == null || confermaPassword.trim().isEmpty()) {
-
-            LOGGER.warning("Validazione fallita: campi obbligatori mancanti");
-            request.setAttribute("errorMessage", "Tutti i campi sono obbligatori");
-            request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
-            return;
-        }
-
-        // Controllo formato email
-        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            LOGGER.warning("Validazione fallita: formato email non valido per email=" + email);
-            request.setAttribute("errorMessage", "Formato email non valido");
-            request.setAttribute("nome", nome);
-            request.setAttribute("cognome", cognome);
-            request.setAttribute("email", email);
-            request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
-            return;
-        }
-
-        // Controllo conferma password
-        if (!password.equals(confermaPassword)) {
-            LOGGER.warning("Validazione fallita: password e confermaPassword non corrispondono per email=" + email);
-            request.setAttribute("errorMessage", "Le password non corrispondono");
-            request.setAttribute("nome", nome);
-            request.setAttribute("cognome", cognome);
-            request.setAttribute("email", email);
-            request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
-            return;
-        }
-
-        // Nuovo controllo: validazione forza password (8 char, almeno una maiuscola, un numero, un carattere speciale)
-        if (!isValidPassword(password)) {
-            LOGGER.warning("Validazione fallita: password non rispetta la policy per email=" + email);
-            request.setAttribute("errorMessage", "La password deve contenere almeno 8 caratteri, almeno una lettera maiuscola, un numero e un carattere speciale.");
-            request.setAttribute("nome", nome);
-            request.setAttribute("cognome", cognome);
-            request.setAttribute("email", email);
-            request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
-            return;
-        }
-
         try {
-            LOGGER.fine("Chiamo UtenteDAO.emailExists per verificare duplicati");
-            UtenteDAO utenteDAO = new UtenteDAO();
+            // Utilizzo del metodo estratto per la registrazione
+            Utente utente = registerUser(nome, cognome, email, password, confermaPassword);
 
-            if (utenteDAO.emailExists(email)) {
-                LOGGER.info("Tentativo di registrazione con email già esistente: " + email);
-                request.setAttribute("errorMessage", "Questa email è già associata ad un account");
-                request.setAttribute("nome", nome);
-                request.setAttribute("cognome", cognome);
-                request.setAttribute("email", email);
-                request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
-                return;
-            }
-
-            LOGGER.fine("Chiamo UtenteDAO.addUtente per creare l'utente");
-            Utente utente = utenteDAO.addUtente(nome, cognome, email, password);
-
-            LOGGER.info("Utente registrato correttamente: email=" + email + ", utente=" + (utente != null ? utente.toString() : "null"));
-
-            // Impostiamo un messaggio di successo e forwards al login
+            LOGGER.info("Utente registrato correttamente: email=" + email);
             request.setAttribute("successMessage", "Registrazione avvenuta con successo. Effettua il login.");
             request.getRequestDispatcher("/WEB-INF/GUI/auth/login.jsp").forward(request, response);
 
+        } catch (IllegalArgumentException e) {
+            LOGGER.warning("Registrazione fallita: " + e.getMessage());
+            request.setAttribute("errorMessage", e.getMessage());
+            request.setAttribute("nome", nome);
+            request.setAttribute("cognome", cognome);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/WEB-INF/GUI/auth/registrazione.jsp").forward(request, response);
         } catch (RuntimeException e) {
-            // Se c'è un errore durante l'inserimento nel DB (es. email già esistente)
             LOGGER.log(Level.SEVERE, "Errore durante la registrazione per email=" + email, e);
             request.setAttribute("errorMessage", "Errore durante la registrazione: " + e.getMessage());
             request.setAttribute("nome", nome);
@@ -129,13 +69,76 @@ public class RegistrazioneServlet extends HttpServlet {
         }
     }
 
-    // Helper che controlla la policy della password
-    private boolean isValidPassword(String password) {
-        if (password == null) return false;
-        // almeno 8 caratteri, almeno una maiuscola, almeno un numero, almeno un carattere speciale
-        // Uso una classe negata [^A-Za-z0-9] per rappresentare qualsiasi carattere non alfanumerico (carattere speciale)
-        String pattern = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$";
-        return password.matches(pattern);
-    }
+    /**
+     * Metodo estratto per la logica di registrazione.
+     * Facilita il testing con Category Partition isolando la business logic.
+     * Tutte le validazioni sono contenute in questo metodo.
+     *
+     * @param nome Nome dell'utente
+     * @param cognome Cognome dell'utente
+     * @param email Email dell'utente
+     * @param password Password dell'utente
+     * @param confermaPassword Conferma password
+     * @return Utente creato
+     * @throws IllegalArgumentException se i parametri non sono validi
+     * @throws RuntimeException se si verifica un errore durante la creazione dell'utente
+     */
+    protected Utente registerUser(String nome, String cognome, String email,
+                                   String password, String confermaPassword) {
 
+        // Validazione campi obbligatori - Category Partition: null, empty, whitespace, validi
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il campo nome è obbligatorio");
+        }
+        if (cognome == null || cognome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il campo cognome è obbligatorio");
+        }
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il campo email è obbligatorio");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il campo password è obbligatorio");
+        }
+        if (confermaPassword == null || confermaPassword.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il campo conferma password è obbligatorio");
+        }
+
+        // Validazione formato email - Category Partition: formato valido, formato invalido
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            throw new IllegalArgumentException("Formato email non valido");
+        }
+
+        // Validazione corrispondenza password - Category Partition: corrispondono, non corrispondono
+        if (!password.equals(confermaPassword)) {
+            throw new IllegalArgumentException("Le password non corrispondono");
+        }
+
+        // Validazione policy password
+        // Category Partition: Lunghezza (<8, >=8), Maiuscola (presente, assente),
+        //                     Numero (presente, assente), Carattere speciale (presente, assente)
+        if (password.length() < 8) {
+            throw new IllegalArgumentException("La password deve contenere almeno 8 caratteri");
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            throw new IllegalArgumentException("La password deve contenere almeno una lettera maiuscola");
+        }
+        if (!password.matches(".*\\d.*")) {
+            throw new IllegalArgumentException("La password deve contenere almeno un numero");
+        }
+        if (!password.matches(".*[^A-Za-z0-9].*")) {
+            throw new IllegalArgumentException("La password deve contenere almeno un carattere speciale");
+        }
+
+        // Verifica esistenza email e creazione utente
+        LOGGER.fine("Chiamo UtenteDAO.emailExists per verificare duplicati");
+        UtenteDAO utenteDAO = new UtenteDAO();
+
+        if (utenteDAO.emailExists(email)) {
+            LOGGER.info("Tentativo di registrazione con email già esistente: " + email);
+            throw new IllegalArgumentException("Questa email è già associata ad un account");
+        }
+
+        LOGGER.fine("Chiamo UtenteDAO.addUtente per creare l'utente");
+        return utenteDAO.addUtente(nome, cognome, email, password);
+    }
 }
