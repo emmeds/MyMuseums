@@ -25,41 +25,51 @@ public class PortafoglioServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/GUI/Portafoglio.jsp");
-        TipologiaBigliettoDAO tipologiaBigliettoDAO = new TipologiaBigliettoDAO();
-        OrdineDAO ordineDAO = new OrdineDAO();
-        BigliettoDAO bigliettoDAO = new BigliettoDAO();
 
         //Controlla se l'utente è loggato
         if(session != null && session.getAttribute("utente") != null) {
 
             Utente utenteLoggato = (Utente) session.getAttribute("utente");
-
             int idUtente = utenteLoggato.getIdUtente();
 
-            List<Ordine> ordini = ordineDAO.doRetrieveOrdersById(idUtente);
-
-
-            for(Ordine ordine : ordini) {
-                List<Biglietto> biglietti = bigliettoDAO.doRetrieveBigliettiById(ordine.getIdOrdine());
-                ordine.setBiglietti(biglietti);
-                
-
-                for(Biglietto biglietto : biglietti) {
-                    // Chiamo il metodo che ora restituisce un SINGOLO oggetto
-                    TipologiaBiglietto tipologia = tipologiaBigliettoDAO.doRetrieveTipologiaById(biglietto.getIdTipologia());
-
-                    // Aggiungo la singola tipologia alla lista dell'ordine
-                    if (tipologia != null) {
-                        ordine.getTipologie().add(tipologia);
-                    }
-                }
-            }
-
+            List<Ordine> ordini = getPortafoglio(idUtente);
             request.setAttribute("ordini", ordini);
 
             dispatcher.forward(request, response);
         }else{
             response.sendRedirect(request.getContextPath() + "/login");
         }
+    }
+
+    /**
+     * Recupera il portafoglio (ordini con biglietti e tipologie) per un utente.
+     * Metodo package-private per facilità di testing.
+     *
+     * @param idUtente ID dell'utente
+     * @return Lista di ordini con biglietti e tipologie popolate
+     */
+    List<Ordine> getPortafoglio(int idUtente) {
+        TipologiaBigliettoDAO tipologiaBigliettoDAO = new TipologiaBigliettoDAO();
+        OrdineDAO ordineDAO = new OrdineDAO();
+        BigliettoDAO bigliettoDAO = new BigliettoDAO();
+
+        List<Ordine> ordini = ordineDAO.doRetrieveOrdersById(idUtente);
+
+        for(Ordine ordine : ordini) {
+            List<Biglietto> biglietti = bigliettoDAO.doRetrieveBigliettiById(ordine.getIdOrdine());
+            ordine.setBiglietti(biglietti);
+
+            for(Biglietto biglietto : biglietti) {
+                // Chiamo il metodo che ora restituisce un SINGOLO oggetto
+                TipologiaBiglietto tipologia = tipologiaBigliettoDAO.doRetrieveTipologiaById(biglietto.getIdTipologia());
+
+                // Aggiungo la singola tipologia alla lista dell'ordine
+                if (tipologia != null) {
+                    ordine.getTipologie().add(tipologia);
+                }
+            }
+        }
+
+        return ordini;
     }
 }
