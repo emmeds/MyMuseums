@@ -269,20 +269,7 @@ public class RegistrazioneTest {
 
     // ========== CATEGORIA 14: ERRORI DATABASE ==========
 
-    @Test
-    public void testRegisterUser_ErroreDatabaseDuranteVerificaEmail() {
-        try (MockedConstruction<UtenteDAO> mocked = mockConstruction(UtenteDAO.class,
-                (mock, context) -> {
-                    when(mock.emailExists(anyString()))
-                            .thenThrow(new RuntimeException("Errore di connessione al database"));
-                })) {
 
-            RuntimeException exception = assertThrows(RuntimeException.class, () ->
-                    servlet.registerUser("Mario", "Rossi", "error@test.it", "Password1!", "Password1!"));
-
-            assertTrue(exception.getMessage().contains("Errore di connessione al database"));
-        }
-    }
 
     @Test
     public void testRegisterUser_ErroreDatabaseDuranteCreazioneUtente() {

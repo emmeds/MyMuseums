@@ -38,29 +38,6 @@ public class AddMuseoServlet extends HttpServlet {
         String sPrezzoSaltaFila = request.getParameter("prezzoSaltaFila");
         String sPrezzoTour = request.getParameter("prezzoTourGuidato");
 
-        if (isNullOrEmpty(nome) || isNullOrEmpty(via) || isNullOrEmpty(citta) || isNullOrEmpty(cap)
-                || isNullOrEmpty(descrizione) || isNullOrEmpty(immagine)
-                || isNullOrEmpty(sPrezzoStandard) || isNullOrEmpty(sPrezzoRidotto) || isNullOrEmpty(sPrezzoSaltaFila) || isNullOrEmpty(sPrezzoTour)) {
-            request.setAttribute("errorMessage", "Tutti i campi sono obbligatori.");
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/GUI/admin/admin.jsp");
-            rd.forward(request, response);
-            return;
-        }
-
-        BigDecimal prezzoStandard, prezzoRidotto, prezzoSaltaFila, prezzoTour;
-        try {
-            prezzoStandard = new BigDecimal(sPrezzoStandard);
-            prezzoRidotto = new BigDecimal(sPrezzoRidotto);
-            prezzoSaltaFila = new BigDecimal(sPrezzoSaltaFila);
-            prezzoTour = new BigDecimal(sPrezzoTour);
-        } catch (NumberFormatException e) {
-            logger.log(Level.WARNING, "Prezzi non validi", e);
-            request.setAttribute("errorMessage", "I prezzi inseriti non sono validi.");
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/GUI/admin/admin.jsp");
-            rd.forward(request, response);
-            return;
-        }
-
         Museo museo = new Museo();
         museo.setNome(nome);
         museo.setVia(via);
@@ -68,10 +45,10 @@ public class AddMuseoServlet extends HttpServlet {
         museo.setCap(cap);
         museo.setDescrizione(descrizione);
         museo.setImmagine(immagine);
-        museo.setPrezzoTourGuidato(prezzoTour);
+        // prezzoTour verrà parsato dentro addMuseo
 
         try {
-            int idMuseo = addMuseo(museo, prezzoStandard, prezzoRidotto, prezzoSaltaFila);
+            int idMuseo = addMuseo(museo, sPrezzoStandard, sPrezzoRidotto, sPrezzoSaltaFila, sPrezzoTour);
             if (idMuseo > 0) {
                 String success = "Museo aggiunto con successo (id=" + idMuseo + ").";
                 logger.info(success);
@@ -81,6 +58,10 @@ public class AddMuseoServlet extends HttpServlet {
                 logger.severe(err);
                 request.setAttribute("errorMessage", err);
             }
+        } catch (IllegalArgumentException iae) {
+            // validation error
+            logger.log(Level.WARNING, "Dati non validi: " + iae.getMessage());
+            request.setAttribute("errorMessage", iae.getMessage());
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Errore interno durante il salvataggio del museo", e);
             request.setAttribute("errorMessage", "Errore interno: " + e.getMessage());
@@ -93,19 +74,50 @@ public class AddMuseoServlet extends HttpServlet {
     /**
      * Salva il museo con le relative tipologie biglietto.
      * Metodo package-private per facilità di testing.
+     * Ora include anche i controlli di validità dei campi e il parsing dei prezzi.
      *
-     * @param museo il museo da salvare
-     * @param prezzoStandard prezzo biglietto standard
-     * @param prezzoRidotto prezzo biglietto ridotto
-     * @param prezzoSaltaFila prezzo biglietto salta la fila
+     * @param museo il museo (campi principali già impostati)
+     * @param sPrezzoStandard prezzo biglietto standard (stringa da parsare)
+     * @param sPrezzoRidotto prezzo biglietto ridotto (stringa da parsare)
+     * @param sPrezzoSaltaFila prezzo biglietto salta la fila (stringa da parsare)
+     * @param sPrezzoTour prezzo tour guidato (stringa da parsare)
      * @return ID del museo salvato (> 0 se successo, -1 se errore)
+     * @throws IllegalArgumentException in caso di dati non validi
      */
-    int addMuseo(Museo museo, BigDecimal prezzoStandard, BigDecimal prezzoRidotto, BigDecimal prezzoSaltaFila) {
-        MuseoDAO museoDAO = new MuseoDAO();
+    int addMuseo(Museo museo, String sPrezzoStandard, String sPrezzoRidotto, String sPrezzoSaltaFila, String sPrezzoTour) {
+        // controlli sui campi obbligatori
+        if (museo == null
+                || isNullOrEmpty(museo.getNome())
+                || isNullOrEmpty(museo.getVia())
+                || isNullOrEmpty(museo.getCitta())
+                || isNullOrEmpty(museo.getCap())
+                || isNullOrEmpty(museo.getDescrizione())
+                || isNullOrEmpty(museo.getImmagine())
+                || isNullOrEmpty(sPrezzoStandard)
+                || isNullOrEmpty(sPrezzoRidotto)
+                || isNullOrEmpty(sPrezzoSaltaFila)
+                || isNullOrEmpty(sPrezzoTour)) {
+            throw new IllegalArgumentException("Tutti i campi sono obbligatori.");
+        }
+
+        BigDecimal prezzoStandard, prezzoRidotto, prezzoSaltaFila, prezzoTour;
+        try {
+            prezzoStandard = new BigDecimal(sPrezzoStandard.trim());
+            prezzoRidotto = new BigDecimal(sPrezzoRidotto.trim());
+            prezzoSaltaFila = new BigDecimal(sPrezzoSaltaFila.trim());
+            prezzoTour = new BigDecimal(sPrezzoTour.trim());
+        } catch (NumberFormatException e) {
+            logger.log(Level.WARNING, "Prezzi non validi", e);
+            throw new IllegalArgumentException("I prezzi inseriti non sono validi.");
+        }
+
+        museo.setPrezzoTourGuidato(prezzoTour);
+
+        MuseoDAO museoDAO = createMuseoDAO();
         int idMuseo = museoDAO.doSave(museo);
 
         if (idMuseo > 0) {
-            TipologiaBigliettoDAO tipologiaBigliettoDAO = new TipologiaBigliettoDAO();
+            TipologiaBigliettoDAO tipologiaBigliettoDAO = createTipologiaBigliettoDAO();
 
             TipologiaBiglietto t1 = new TipologiaBiglietto();
             t1.setNome("Standard");
@@ -127,6 +139,15 @@ public class AddMuseoServlet extends HttpServlet {
         }
 
         return idMuseo;
+    }
+
+    // Factory methods - protected so tests can override or extend the servlet to inject mocks
+    protected MuseoDAO createMuseoDAO() {
+        return new MuseoDAO();
+    }
+
+    protected TipologiaBigliettoDAO createTipologiaBigliettoDAO() {
+        return new TipologiaBigliettoDAO();
     }
 
     private boolean isNullOrEmpty(String s) {
