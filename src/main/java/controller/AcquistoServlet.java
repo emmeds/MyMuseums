@@ -113,6 +113,11 @@ public class AcquistoServlet extends HttpServlet {
             throw new IllegalArgumentException("La data non può essere nel passato.");
         }
 
+        //2.1 Validazione Orario Visita
+        if (orarioVisita == null || orarioVisita.trim().isEmpty()) {
+            throw new IllegalArgumentException("Orario non valido.");
+        }
+
         // 3. Validazione Input Array
         if (idTipologie == null || quantitaStr == null || idTipologie.length != quantitaStr.length) {
             throw new IllegalArgumentException("Dati biglietti non validi o mancanti.");
