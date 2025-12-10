@@ -206,13 +206,17 @@ public class AcquistoServlet extends HttpServlet {
         }
 
         // Validazione Carta Semplificata
+        String intestatario = req.getParameter("intestatario");
+        String scadenza = req.getParameter("scadenza");
         String numeroCarta = req.getParameter("numeroCarta");
         String cvc = req.getParameter("cvc");
 
         boolean cartaOk = (numeroCarta != null && numeroCarta.matches("\\d{16}"));
         boolean cvcOk = (cvc != null && cvc.matches("\\d{3}"));
+        boolean intestatarioOk = (intestatario != null && !intestatario.trim().isEmpty());
+        boolean scadenzaOk = (scadenza != null && !scadenza.trim().isEmpty() && scadenza.matches("^(0[1-9]|1[0-2])/\\d{2}$"));
 
-        if (cartaOk && cvcOk) {
+        if (cartaOk && cvcOk &&  intestatarioOk && scadenzaOk) {
             salvaOrdine(ordine, session, req, resp);
         } else {
             req.setAttribute("error", "Dati carta non validi.");
