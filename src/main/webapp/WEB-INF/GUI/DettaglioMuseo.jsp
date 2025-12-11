@@ -19,6 +19,8 @@
 
             <div class="details-grid">
 
+
+
                 <!-- 1. Immagine -->
                 <div class="details-image-col">
                     <img src="${pageContext.request.contextPath}${museo.immagine}"
@@ -27,6 +29,10 @@
 
                 <!-- 2. Info e Selezione -->
                 <div class="details-info-col">
+                    <c:if test="${not empty sessionScope.errorMessage}">
+                        <div class="alert alert-danger" style="color:red">${sessionScope.errorMessage}</div>
+                        <c:remove var="errorMessage" scope="session"/>
+                    </c:if>
                     <h1 class="details-title"><c:out value="${museo.nome}"/></h1>
                     <p class="details-location">
                         📍 <c:out value="${museo.via}"/>, <c:out value="${museo.citta}"/> (<c:out value="${museo.cap}"/>)

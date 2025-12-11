@@ -123,7 +123,7 @@ public class AcquistoServlet extends HttpServlet {
             throw new IllegalArgumentException("Dati biglietti non validi o mancanti.");
         }
 
-        // 4. Recupero dati DB tramite Factory Methods (Mockabili)
+        // 4. Recupero dati DB
         Museo museo = getMuseoDAO().doRetrieveById(idMuseo);
         if (museo == null) {
             throw new IllegalArgumentException("Museo non trovato.");
@@ -253,10 +253,14 @@ public class AcquistoServlet extends HttpServlet {
 
     // --- Helper Utils ---
     private void redirectError(HttpServletRequest req, HttpServletResponse resp, int idMuseo, String msg) throws ServletException, IOException {
-        req.setAttribute("errorMessage", msg);
+        req.getSession().setAttribute("errorMessage", msg);
+
+
         // Fallback se idMuseo non valido, rimanda alla home o gestisci come preferisci
         String target = (idMuseo > 0) ? "/DettagliMuseoServlet?id=" + idMuseo : "/index.jsp";
-        req.getRequestDispatcher(target).forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + target);
+
+
     }
 
     private int parseMsg(String num) {
