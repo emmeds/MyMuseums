@@ -62,17 +62,17 @@
                         </div>
                     </li>
                     <li>
-                        <span class="benefit-icon">⭐</span>
+                        <span class="benefit-icon">🏛️</span>
                         <div>
-                            <strong>Preferiti</strong>
-                            <p>Salva i musei che ami di più</p>
+                            <strong>Esplora i Musei</strong>
+                            <p>Sfoglia la lista completa disponibile</p>
                         </div>
                     </li>
                     <li>
-                        <span class="benefit-icon">🔔</span>
+                        <span class="benefit-icon">📖</span>
                         <div>
-                            <strong>Notifiche</strong>
-                            <p>Ricevi aggiornamenti su nuovi eventi</p>
+                            <strong>Guida alla Visita</strong>
+                            <p>Segui le istruzioni passo passo nelle FAQ</p>
                         </div>
                     </li>
                     <li>

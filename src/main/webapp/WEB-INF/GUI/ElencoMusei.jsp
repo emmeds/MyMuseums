@@ -27,7 +27,7 @@
                                     <p class="museum-description"><c:out value="${museo.descrizione}"/></p>
                                     <div class="museum-footer">
                                         <span class="price">Da €<c:out value="${museo.prezzoTourGuidato}"/></span>
-                                        <button class="btn-primary">Acquista Ora</button>
+                                        <button class="btn-primary">Dettagli</button>
                                     </div>
                                 </div>
                             </div>
