@@ -71,7 +71,7 @@ class AddMuseoServletTest {
         return m;
     }
 
-    // --- GRUPPO: Museo Object ---
+    // GRUPPO: Museo Object ---
 
     @Test
     void testAddMuseo_MuseoNull_TC01() {
@@ -80,7 +80,7 @@ class AddMuseoServletTest {
         assertEquals(ERR_REQUIRED, e.getMessage());
     }
 
-    // --- GRUPPO: Campo Nome ---
+    //  GRUPPO: Campo Nome ---
 
     @Test
     void testAddMuseo_NomeNull_TC02() {
@@ -196,7 +196,7 @@ class AddMuseoServletTest {
         assertEquals(ERR_REQUIRED, e.getMessage());
     }
 
-    // --- GRUPPO: Campo Descrizione ---
+    //  Campo Descrizione ---
 
     @Test
     void testAddMuseo_DescrizioneNull_TC14() {
@@ -225,7 +225,7 @@ class AddMuseoServletTest {
         assertEquals(ERR_REQUIRED, e.getMessage());
     }
 
-    // --- GRUPPO: Campo Immagine ---
+    // GRUPPO: Campo Immagine
 
     @Test
     void testAddMuseo_ImmagineNull_TC17() {
@@ -254,7 +254,7 @@ class AddMuseoServletTest {
         assertEquals(ERR_REQUIRED, e.getMessage());
     }
 
-    // --- GRUPPO: Prezzi Presenza (Stringhe) ---
+    //  GRUPPO: Prezzi Presenza (Stringhe)
 
     @Test
     void testAddMuseo_PrezziInputNull_TC20() {
@@ -283,7 +283,7 @@ class AddMuseoServletTest {
         assertEquals(ERR_REQUIRED, e.getMessage());
     }
 
-    // --- GRUPPO: Formato Prezzi ---
+    //  GRUPPO: Formato Prezzi
 
     @Test
     void testAddMuseo_PrezziFormatoNonNumerico_TC23() {
@@ -295,7 +295,7 @@ class AddMuseoServletTest {
         verifyNoInteractions(museoDAOMock);
     }
 
-    // --- GRUPPO: DAO Fallimento ---
+    //  GRUPPO: DAO Fallimento
 
     @Test
     void testAddMuseo_DaoSaveFail_TC24() {
@@ -312,8 +312,7 @@ class AddMuseoServletTest {
         verifyNoInteractions(tipologiaBigliettoDAOMock);
     }
 
-    // --- GRUPPO: Successo (Happy Path) ---
-
+    //  GRUPPO: Successo
     @Test
     void testAddMuseo_Success_TC25() {
         Museo m = getValidMuseo();

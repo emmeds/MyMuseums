@@ -19,7 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class) // Abilita l'uso di Mockito con JUnit 5
 class AcquistoServletTest {
 
     // System Under Test
@@ -88,7 +88,7 @@ class AcquistoServletTest {
     }
 
     // =================================================================================
-    // TEST CASES (Mapping Rigoroso Tabella TC-01 -> TC-11)
+    // TEST CASES
     // =================================================================================
 
     // TC-01: ID Museo <= 0
@@ -105,14 +105,14 @@ class AcquistoServletTest {
     // TC-02: Data Visita Null/Empty
     @Test
     void testElabora_TC02_DataMissing() {
-        // [PROP_ID_OK] + [DT_PRES] = Null
+
         IllegalArgumentException e1 = assertThrows(IllegalArgumentException.class, () ->
                 servlet.elaboraCreazioneOrdine(utenteTest, VALID_ID_MUSEO, null,
                         new String[]{"1"}, new String[]{"1"}, false, VALID_TIME)
         );
         assertEquals(ERR_DT_MISSING, e1.getMessage());
 
-        // [PROP_ID_OK] + [DT_PRES] = Empty
+
         IllegalArgumentException e2 = assertThrows(IllegalArgumentException.class, () ->
                 servlet.elaboraCreazioneOrdine(utenteTest, VALID_ID_MUSEO, "",
                         new String[]{"1"}, new String[]{"1"}, false, VALID_TIME)
@@ -120,10 +120,10 @@ class AcquistoServletTest {
         assertEquals(ERR_DT_MISSING, e2.getMessage());
     }
 
-    // TC-03: Formato Data Errato
+    // TC-03: Formato Data Errato=Malformato
     @Test
     void testElabora_TC03_DataMalformed() {
-        // ...[DT_PRES_OK] + [DT_FMT] = Malformed
+
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
                 servlet.elaboraCreazioneOrdine(utenteTest, VALID_ID_MUSEO, "01-01-2025", // Formato errato (serve YYYY-MM-DD)
                         new String[]{"1"}, new String[]{"1"}, false, VALID_TIME)
@@ -134,7 +134,7 @@ class AcquistoServletTest {
     // TC-04: Validità Temporale (Passato)
     @Test
     void testElabora_TC04_DataPassata() {
-        // ...[DT_FMT_OK] + [DT_TIME] = Passato
+
         String yesterday = LocalDate.now().minusDays(1).toString();
 
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
@@ -147,7 +147,7 @@ class AcquistoServletTest {
     // TC-05: Input Arrays Null
     @Test
     void testElabora_TC05_ArraysNull() {
-        // ...[DT_TIME_OK] + [ARR_STR] = Null
+
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
                 servlet.elaboraCreazioneOrdine(utenteTest, VALID_ID_MUSEO, VALID_DATE,
                         null, null, false, VALID_TIME)
@@ -155,10 +155,10 @@ class AcquistoServletTest {
         assertEquals(ERR_ARR, e.getMessage());
     }
 
-    // TC-06: Input Arrays Lunghezza Diversa
+    // TC-06: Input Arrays Lunghezza Diversa-Missmatch
     @Test
     void testElabora_TC06_ArraysMismatch() {
-        // ...[DT_TIME_OK] + [ARR_STR] = Length Mismatch
+
         String[] ids = {"1", "2"};
         String[] qts = {"1"}; // Manca una quantità
 
@@ -172,7 +172,7 @@ class AcquistoServletTest {
     // TC-07: DB Museo Not Found
     @Test
     void testElabora_TC07_MuseoNotFound() {
-        // ...[ARR_OK] + [DB_MUS] = Not Found
+
         when(museoDAOMock.doRetrieveById(VALID_ID_MUSEO)).thenReturn(null);
 
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
@@ -185,7 +185,6 @@ class AcquistoServletTest {
     // TC-08: Match Tipologia (ID nel form non esiste nel DB)
     @Test
     void testElabora_TC08_TipologiaInvalid() {
-        // ...[DB_MUS_OK] + [TIPO_MATCH] = Invalid
         when(museoDAOMock.doRetrieveById(VALID_ID_MUSEO)).thenReturn(getMockMuseo());
         // Il DB restituisce solo tipologie 1 e 2
         when(tipologiaBigliettoDAOMock.doRetrieveByMuseoId(VALID_ID_MUSEO)).thenReturn(getMockTipologie());
@@ -204,7 +203,7 @@ class AcquistoServletTest {
     // TC-09: Quantità Totale Zero
     @Test
     void testElabora_TC09_QtyZero() {
-        // ...[TIPO_OK] + [QTY_SUM] = 0
+
         when(museoDAOMock.doRetrieveById(VALID_ID_MUSEO)).thenReturn(getMockMuseo());
         when(tipologiaBigliettoDAOMock.doRetrieveByMuseoId(VALID_ID_MUSEO)).thenReturn(getMockTipologie());
 
@@ -219,10 +218,10 @@ class AcquistoServletTest {
         assertEquals(ERR_QTY_ZERO, e.getMessage());
     }
 
-    // TC-10: Successo Senza Tour
+    // TC-10: Successo Senza Tour Guidato
     @Test
     void testElabora_TC10_SuccessNoTour() {
-        // ...[QTY_OK] + [OPT_TOUR] = False
+
         when(museoDAOMock.doRetrieveById(VALID_ID_MUSEO)).thenReturn(getMockMuseo());
         when(tipologiaBigliettoDAOMock.doRetrieveByMuseoId(VALID_ID_MUSEO)).thenReturn(getMockTipologie());
 
@@ -242,7 +241,7 @@ class AcquistoServletTest {
     // TC-11: Successo Con Tour
     @Test
     void testElabora_TC11_SuccessWithTour() {
-        // ...[QTY_OK] + [OPT_TOUR] = True
+
         Museo m = getMockMuseo(); // Prezzo tour = 10.00
         when(museoDAOMock.doRetrieveById(VALID_ID_MUSEO)).thenReturn(m);
         when(tipologiaBigliettoDAOMock.doRetrieveByMuseoId(VALID_ID_MUSEO)).thenReturn(getMockTipologie());

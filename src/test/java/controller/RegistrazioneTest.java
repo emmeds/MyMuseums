@@ -12,8 +12,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Test class per RegistrazioneServlet usando Category Partition.
- * I test sono organizzati per categoria di validazione.
  * Il metodo registerUser ritorna Utente e lancia IllegalArgumentException per errori di validazione.
  */
 public class RegistrazioneTest {
