@@ -12,7 +12,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Scopri l'Arte e la Cultura</h1>
-            <p class="hero-subtitle">Acquista i tuoi biglietti per i migliori musei d'Italia in un solo click</p>
+            <p class="hero-subtitle">Acquista i tuoi biglietti per i migliori musei della Campania in un solo click</p>
             <div class="search-box">
                 <form action="${pageContext.request.contextPath}/SearchServlet" method="get" class="search-form">
                     <div class="input-wrap">
@@ -123,8 +123,7 @@
     <section class="cta">
         <div class="container">
             <h2>Inizia la Tua Avventura Culturale</h2>
-            <p>Registrati ora e inizia ad acquistare!</p>
-            <button class="btn-primary">Registrati Gratuitamente</button>
+
         </div>
     </section>
 <%@ include file="includes/footer.jspf" %>

@@ -12,7 +12,7 @@
             <div class="auth-card">
                 <div class="auth-header">
                     <h2>Registrati</h2>
-                    <p>Crea un account per iniziare a prenotare</p>
+                    <p>Crea un account per iniziare ad acquistare</p>
                 </div>
 
                 <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
@@ -82,28 +82,14 @@
                         <span class="benefit-icon">✓</span>
                         <div>
                             <strong>Accesso immediato</strong>
-                            <p>Prenota i tuoi biglietti in pochi click</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="benefit-icon">✓</span>
-                        <div>
-                            <strong>Offerte esclusive</strong>
-                            <p>Sconti riservati solo agli utenti registrati</p>
+                            <p>Acquista i tuoi biglietti in pochi click</p>
                         </div>
                     </li>
                     <li>
                         <span class="benefit-icon">✓</span>
                         <div>
                             <strong>Storico acquisti</strong>
-                            <p>Gestisci tutti i tuoi biglietti in un unico posto</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="benefit-icon">✓</span>
-                        <div>
-                            <strong>Newsletter culturale</strong>
-                            <p>Rimani aggiornato su eventi e mostre</p>
+                            <p>Visualizza tutti i tuoi biglietti in un unico posto</p>
                         </div>
                     </li>
                 </ul>

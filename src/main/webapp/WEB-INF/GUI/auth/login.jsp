@@ -75,13 +75,6 @@
                             <p>Segui le istruzioni passo passo nelle FAQ</p>
                         </div>
                     </li>
-                    <li>
-                        <span class="benefit-icon">💳</span>
-                        <div>
-                            <strong>Metodi di pagamento</strong>
-                            <p>Gestisci le tue carte salvate</p>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>

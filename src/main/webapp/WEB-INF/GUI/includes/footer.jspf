@@ -9,7 +9,7 @@
             <div class="link-column colonna">
                 <h4>Link Utili</h4>
                 <ul>
-                    <li><a class="faq-link" href="${pageContext.request.contextPath}/faq">FAQ</a></li>
+                    <li><a class="faq-link" href="${pageContext.request.contextPath}/faq/faq.jsp">FAQ</a></li>
 
                 </ul>
             </div>
@@ -19,7 +19,7 @@
                 <div class="footer-column">
 
                     <h3> MyMuseums</h3>
-                    <p>La tua porta d'accesso alla cultura italiana.</p>
+                    <p>La tua porta d'accesso alla cultura campana.</p>
                 </div>
 
 
