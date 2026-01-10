@@ -6,7 +6,7 @@ import model.bean.UtenteRegistrato;
 
 public class UtenteFactory {
 
-    // Questo è il metodo magico
+    
     public static Utente getUtente(String tipo) {
         if (tipo.equalsIgnoreCase("ADMIN")) {
             return new Admin(); // Crea un Admin vuoto
